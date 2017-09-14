@@ -1,6 +1,6 @@
 package cp;
 
-import java.util.LinkedList;
+import java.util.List;
 
 public abstract class ComponenteDeProcesamiento {
 
@@ -8,6 +8,6 @@ public abstract class ComponenteDeProcesamiento {
 		super();
 	}
 
-	public abstract void ejecutar(LinkedList<String> archivo);
-	
+	public abstract List<String> ejecutar(List<String> archivo);
+
 }
