@@ -1,12 +1,18 @@
 package main;
 
-import java.util.List;
-
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+
+	private Stage primaryStage;
 
 	public static void main(String[] args) {
 		launch(args);
@@ -14,22 +20,52 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		//TODO Hacer un men� que permita elegir el lenguaje de origen (valido), por ahora C++ procedural.
-		//TODO se podria hacer una interface que pregunte el lenguaje y la cantidad de archivos a procesar
-		Integer veces = 1;
-		List<String> args = getParameters().getRaw();
-		if(args.size() == 1){
-			try{
-				veces = new Integer(args.get(0));
-			} catch(Exception e){
+		this.primaryStage = primaryStage;
+		mostrarPantallaInicial();
+		primaryStage.show();
+	}
 
-			}
-		}
-		for(int i = 0; i < veces; i++){
-			new Procesamiento(Lenguaje.CMasMasProcedural, primaryStage).run();
+	private void mostrarPantallaInicial() {
+		//Setear icono y titulo de espera
+		primaryStage.setTitle("Herramienta de marcado de código");
+
+		//Crear panel base
+		VBox panel = new VBox();
+		panel.setAlignment(Pos.CENTER);
+
+		//Agregar comboBox con lenguajes
+		Label esperando = new Label("Lenguaje a marcar:");
+		panel.getChildren().add(esperando);
+
+		ComboBox<Lenguaje> cbLenguajes = new ComboBox<>();
+		cbLenguajes.getItems().addAll(Lenguaje.values());
+		cbLenguajes.getSelectionModel().select(0);
+		panel.getChildren().add(cbLenguajes);
+
+		Button aceptar = new Button("Aceptar");
+		aceptar.setOnAction(t -> {
+			Lenguaje lenguaje = cbLenguajes.getValue();
+			procesar(lenguaje);
+		});
+		panel.getChildren().add(aceptar);
+
+		Button cancelar = new Button("Cancelar");
+		cancelar.setOnAction(t -> {
+			Platform.exit();
+		});
+		panel.getChildren().add(cancelar);
+
+		Scene scene = new Scene(panel);
+		primaryStage.setScene(scene);
+	}
+
+	private void procesar(Lenguaje lenguaje) {
+		Procesamiento procesamiento = new Procesamiento(lenguaje, primaryStage);
+		boolean seguir = true;
+		while(seguir){
+			seguir = procesamiento.run();
 		}
 
 		Platform.exit();
 	}
-
 }
