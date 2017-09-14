@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import cp.ComponenteDeProcesamiento;
+import cp.Lenguaje;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;

@@ -1,5 +1,11 @@
 package main;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import cp.Lenguaje;
+import cp.aedd.CMasMasProcedural;
+import cp.pdp.GNUSmalltalk;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
@@ -38,7 +44,7 @@ public class Main extends Application {
 		panel.getChildren().add(esperando);
 
 		ComboBox<Lenguaje> cbLenguajes = new ComboBox<>();
-		cbLenguajes.getItems().addAll(Lenguaje.values());
+		cbLenguajes.getItems().addAll(this.lenguajesSoportados());
 		cbLenguajes.getSelectionModel().select(0);
 		panel.getChildren().add(cbLenguajes);
 
@@ -67,5 +73,13 @@ public class Main extends Application {
 		}
 
 		Platform.exit();
+	}
+
+	//TODO agregar a la lista al agregar un lenguaje
+	public List<Lenguaje> lenguajesSoportados() {
+		List<Lenguaje> lenguajesSoportados = new ArrayList<>();
+		lenguajesSoportados.add(new CMasMasProcedural());
+		lenguajesSoportados.add(new GNUSmalltalk());
+		return lenguajesSoportados;
 	}
 }
