@@ -1,4 +1,4 @@
-package main;
+package cp;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -8,10 +8,7 @@ import java.io.PrintWriter;
 import java.util.LinkedList;
 import java.util.List;
 
-import cp.ComponenteDeProcesamiento;
-import cp.Lenguaje;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
+import cp.exception.UnsupportedLanguageException;
 import javafx.stage.Stage;
 
 public class Procesamiento {
@@ -21,7 +18,7 @@ public class Procesamiento {
 	private Lenguaje lenguaje;
 	private Stage stage;
 
-	public Procesamiento(Lenguaje lenguaje, Stage stage) {
+	public Procesamiento(Lenguaje lenguaje, Stage stage) throws UnsupportedLanguageException {
 		this.lenguaje = lenguaje;
 		this.stage = stage;
 		generarConfiguracion(lenguaje);
@@ -40,22 +37,10 @@ public class Procesamiento {
 		return true;
 	}
 
-	private void generarConfiguracion(Lenguaje lenguaje) {
+	private void generarConfiguracion(Lenguaje lenguaje) throws UnsupportedLanguageException {
 		proceso = lenguaje.getProceso();
 		if(proceso == null){
-			System.out.println("Lenguaje no soportado!");
-
-			Alert error = new Alert(AlertType.ERROR);
-			try{
-				error.initOwner(stage);
-			} catch(NullPointerException e){
-				//Si no tiene scene tira esta excepcion
-			}
-			error.setContentText("Lenguaje no soportado");
-			error.setHeaderText(null);
-			error.setTitle("Lenguaje no soportado");
-			error.showAndWait();
-			System.exit(1);
+			throw new UnsupportedLanguageException();
 		}
 	}
 

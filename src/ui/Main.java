@@ -1,16 +1,20 @@
-package main;
+package ui;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cp.Lenguaje;
+import cp.Procesamiento;
 import cp.aedd.CMasMasProcedural;
+import cp.exception.UnsupportedLanguageException;
 import cp.pdp.GNUSmalltalk;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -79,13 +83,27 @@ public class Main extends Application {
 	}
 
 	private void procesar(Lenguaje lenguaje) {
-		Procesamiento procesamiento = new Procesamiento(lenguaje, primaryStage);
-		boolean seguir = true;
-		while(seguir){
-			seguir = procesamiento.run();
-		}
+		try{
+			Procesamiento procesamiento = new Procesamiento(lenguaje, primaryStage);
+			boolean seguir = true;
+			while(seguir){
+				seguir = procesamiento.run();
+			}
+			Platform.exit();
+		} catch(UnsupportedLanguageException e){
+			e.printStackTrace();
 
-		Platform.exit();
+			Alert error = new Alert(AlertType.ERROR);
+			try{
+				error.initOwner(primaryStage);
+			} catch(NullPointerException exc){
+				//Si no tiene scene tira esta excepcion
+			}
+			error.setContentText("Lenguaje no soportado");
+			error.setHeaderText(null);
+			error.setTitle("Lenguaje no soportado");
+			error.showAndWait();
+		}
 	}
 
 	//TODO agregar a la lista al agregar un lenguaje
