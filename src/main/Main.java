@@ -8,11 +8,13 @@ import cp.aedd.CMasMasProcedural;
 import cp.pdp.GNUSmalltalk;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -32,12 +34,16 @@ public class Main extends Application {
 	}
 
 	private void mostrarPantallaInicial() {
-		//Setear icono y titulo de espera
+		//Setear titulo
 		primaryStage.setTitle("Herramienta de marcado de código");
 
 		//Crear panel base
 		VBox panel = new VBox();
-		panel.setAlignment(Pos.CENTER);
+		panel.setPrefWidth(200);
+		panel.setPrefHeight(100);
+		panel.setSpacing(10);
+		panel.setPadding(new Insets(10));
+		panel.setAlignment(Pos.CENTER_LEFT);
 
 		//Agregar comboBox con lenguajes
 		Label esperando = new Label("Lenguaje a marcar:");
@@ -46,20 +52,27 @@ public class Main extends Application {
 		ComboBox<Lenguaje> cbLenguajes = new ComboBox<>();
 		cbLenguajes.getItems().addAll(this.lenguajesSoportados());
 		cbLenguajes.getSelectionModel().select(0);
+		cbLenguajes.setMaxWidth(Double.MAX_VALUE);
 		panel.getChildren().add(cbLenguajes);
+
+		//Crear panel botones y botones
+		HBox panelBotones = new HBox();
+		panelBotones.setAlignment(Pos.BOTTOM_RIGHT);
+		panel.getChildren().add(panelBotones);
 
 		Button aceptar = new Button("Aceptar");
 		aceptar.setOnAction(t -> {
 			Lenguaje lenguaje = cbLenguajes.getValue();
 			procesar(lenguaje);
 		});
-		panel.getChildren().add(aceptar);
+		panelBotones.getChildren().add(aceptar);
 
 		Button cancelar = new Button("Cancelar");
 		cancelar.setOnAction(t -> {
 			Platform.exit();
 		});
-		panel.getChildren().add(cancelar);
+		HBox.setMargin(cancelar, new Insets(0, 0, 0, 10));
+		panelBotones.getChildren().add(cancelar);
 
 		Scene scene = new Scene(panel);
 		primaryStage.setScene(scene);
