@@ -7,7 +7,7 @@ import cp.Lenguaje;
 import cp.Procesamiento;
 import cp.aedd.CMasMasProcedural;
 import cp.exception.UnsupportedLanguageException;
-import cp.pdp.GNUSmalltalk;
+import cp.pdp.st.GNUSmalltalk;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;

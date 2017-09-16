@@ -1,4 +1,4 @@
-package cp.pdp;
+package cp.pdp.st;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -10,6 +10,21 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 
 public class GNUSmalltalk extends Lenguaje {
+
+	enum Marca {
+		inicioClase(" subclass: "), aperturaBloque("["), cierreBloque("]");
+
+		private String nombre;
+
+		private Marca(String nombre) {
+			this.nombre = nombre;
+		}
+
+		@Override
+		public String toString() {
+			return nombre;
+		}
+	}
 
 	@Override
 	public FileChooser getFileChooser() {
@@ -30,6 +45,7 @@ public class GNUSmalltalk extends Lenguaje {
 	@Override
 	public List<ComponenteDeProcesamiento> getProceso() {
 		List<ComponenteDeProcesamiento> proceso = new LinkedList<>();
+		proceso.add(new FormatoEstandar());
 		proceso.add(new DelimitadorDeClasesYMetodos());
 		return proceso;
 	}
