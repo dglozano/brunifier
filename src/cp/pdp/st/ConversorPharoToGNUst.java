@@ -9,7 +9,6 @@ import cp.ComponenteDeProcesamiento;
 
 /**
  * Importa código Pharo al formato de GNU Smalltalk.
- * Limitación: no soporta variables de clase.
  *
  * @author Pablo Marchetti
  */
@@ -19,6 +18,7 @@ public class ConversorPharoToGNUst extends ComponenteDeProcesamiento {
 	private static final String aperturaBloque = PharoToGNUSmalltalk.Marca.aperturaBloque.toString();
 	private static final String cierreBloque = PharoToGNUSmalltalk.Marca.cierreBloque.toString();
 	private static final String variablesInstancia = PharoToGNUSmalltalk.Marca.variablesInstacia.toString();
+	private static final String variablesClase = PharoToGNUSmalltalk.Marca.variablesClase.toString();
 	private static final String marcaMetodos = PharoToGNUSmalltalk.Marca.metodos.toString();
 	private static final String marcaClase = PharoToGNUSmalltalk.Marca.clase.toString();
 
@@ -47,7 +47,7 @@ public class ConversorPharoToGNUst extends ComponenteDeProcesamiento {
 
 					linea = entrada.next();
 					pal = linea.trim().split("\\s+");
-					if(pal.length > 1 && pal[0].equals(variablesInstancia)){
+					if(pal.length > 1 && (pal.length > 2 || pal[1].length() > 2) && pal[0].equals(variablesInstancia)){
 						archivoTransformado.add("");
 						archivoTransformado.add("\"Declaración de variables de instancia\"");
 
@@ -59,6 +59,21 @@ public class ConversorPharoToGNUst extends ComponenteDeProcesamiento {
 						}
 
 						archivoTransformado.add(aux);
+						archivoTransformado.add("");
+					}
+
+					linea = entrada.next();
+					pal = linea.trim().split("\\s+");
+					if(pal.length > 1 && (pal.length > 2 || pal[1].length() > 2) && pal[0].equals(variablesClase)){
+						archivoTransformado.add("");
+						archivoTransformado.add("\"Declaración de variables de clase\"");
+
+						for(int i = 1; i < pal.length; i++){
+							String p = pal[i];
+							p = p.replaceAll("'", "");
+							archivoTransformado.add(p + " := nil.");
+						}
+
 						archivoTransformado.add("");
 					}
 				}

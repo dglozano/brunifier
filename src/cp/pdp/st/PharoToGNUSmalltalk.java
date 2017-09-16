@@ -12,6 +12,7 @@ public class PharoToGNUSmalltalk extends GNUSmalltalk {
 		aperturaBloque("["),
 		cierreBloque("]"),
 		variablesInstacia("instanceVariableNames:"),
+		variablesClase("classVariableNames:"),
 		metodos("methodsFor:"),
 		clase("class");
 
