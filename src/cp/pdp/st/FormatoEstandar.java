@@ -21,24 +21,24 @@ public class FormatoEstandar extends ComponenteDeProcesamiento {
 	public List<String> ejecutar(List<String> archivo) {
 		//Inserta saltos de línea después de un bloque de apertura o de cierre.
 		//Como cada línea se puede porcesar de forma independiente lo hago de forma paralela
-		return new ArrayList<>(archivo).parallelStream().map(lineaOriginal -> {
+		return new ArrayList<>(archivo).parallelStream().map(lineaActual -> {
 			List<String> lineaTransformada = new ArrayList<>();
 			Map<Integer, GNUSmalltalk.Marca> mapa = new TreeMap<>();
-			this.hacerMapaCon(mapa, lineaOriginal);
+			this.hacerMapaCon(mapa, lineaActual);
 
 			while(!mapa.keySet().isEmpty()){
 				Integer indice = mapa.keySet().iterator().next();
 				GNUSmalltalk.Marca marca = mapa.remove(indice);
-				if(indice + 1 != lineaOriginal.length()){
+				if(indice + 1 != lineaActual.length()){
 					String primeraParteLineaConMarca;
 					switch(marca) {
 					case aperturaBloque:
 					case cierreBloque:
-						primeraParteLineaConMarca = lineaOriginal.substring(0, indice + 1);
+						primeraParteLineaConMarca = lineaActual.substring(0, indice + 1);
 						lineaTransformada.add(primeraParteLineaConMarca.trim());
 
-						lineaOriginal = lineaOriginal.substring(indice + 1, lineaOriginal.length());
-						this.hacerMapaCon(mapa, lineaOriginal);
+						lineaActual = lineaActual.substring(indice + 1, lineaActual.length());
+						this.hacerMapaCon(mapa, lineaActual);
 						break;
 					default:
 						break;
@@ -46,7 +46,7 @@ public class FormatoEstandar extends ComponenteDeProcesamiento {
 				}
 			}
 
-			lineaTransformada.add(lineaOriginal.trim());
+			lineaTransformada.add(lineaActual.trim());
 			return lineaTransformada;
 
 			//Al finalizar paso de procesamiento paralelo a secuencial para mantener el orden de las líneas
