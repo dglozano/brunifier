@@ -18,7 +18,7 @@ public class DelimitadorDeClasesYMetodos extends ComponenteDeProcesamiento {
 		List<Boolean> pilaDeTipoMetodoClase = new ArrayList<>();
 
 		archivo.forEach(lineaOriginal -> {
-			String lineaConMarca = lineaOriginal.trim();
+			String lineaConMarca = lineaOriginal;
 			if(!lineaConMarca.isEmpty()){
 				if(abreBloque(lineaOriginal.substring(lineaOriginal.length() - 1, lineaOriginal.length()))){
 					String aux = lineaOriginal.substring(0, lineaOriginal.length() - GNUSmalltalk.Marca.aperturaBloque.toString().length());
