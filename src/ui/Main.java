@@ -91,20 +91,23 @@ public class Main extends Application {
 				seguir = procesamiento.run();
 			}
 			Platform.exit();
-		} catch(UnsupportedLanguageException e){
+		} catch(UnsupportedLanguageException e) {
 			e.printStackTrace();
-
-			Alert error = new Alert(AlertType.ERROR);
-			try{
-				error.initOwner(primaryStage);
-			} catch(NullPointerException exc){
-				//Si no tiene scene tira esta excepcion
-			}
-			error.setContentText("Lenguaje no soportado");
-			error.setHeaderText(null);
-			error.setTitle("Lenguaje no soportado");
-			error.showAndWait();
+			mostrarError(e.getMessage());
 		}
+	}
+	
+	private void mostrarError(String errorMsg) {
+		Alert error = new Alert(AlertType.ERROR);
+		try {
+			error.initOwner(primaryStage);
+		} catch(NullPointerException exc) {
+			exc.printStackTrace();
+		}
+		error.setContentText(errorMsg);
+		error.setHeaderText(null);
+		error.setTitle("ERROR: " + errorMsg);
+		error.showAndWait();
 	}
 
 	//TODO agregar a la lista al agregar un lenguaje
