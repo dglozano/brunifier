@@ -8,6 +8,10 @@ import cp.ComponenteDeProcesamiento;
 
 public class DelimitadorDeClasesYMetodos extends ComponenteDeProcesamiento {
 
+	private static final String inicioClase = GNUSmalltalk.Marca.inicioClase.toString();
+	private static final String aperturaBloque = GNUSmalltalk.Marca.aperturaBloque.toString();
+	private static final String cierreBloque = GNUSmalltalk.Marca.cierreBloque.toString();
+
 	@Override
 	public List<String> ejecutar(List<String> archivo) {
 		List<String> archivoTransformado = new LinkedList<>();
@@ -20,10 +24,10 @@ public class DelimitadorDeClasesYMetodos extends ComponenteDeProcesamiento {
 		archivo.forEach(lineaActual -> {
 			if(!lineaActual.isEmpty()){
 				if(abreBloque(lineaActual.substring(lineaActual.length() - 1, lineaActual.length()))){
-					String aux = lineaActual.substring(0, lineaActual.length() - GNUSmalltalk.Marca.aperturaBloque.toString().length());
-					Integer iInicioClase = lineaActual.indexOf(GNUSmalltalk.Marca.inicioClase.toString());
+					String aux = lineaActual.substring(0, lineaActual.length() - aperturaBloque.length());
+					Integer iInicioClase = lineaActual.indexOf(inicioClase);
 					if(iInicioClase != -1){
-						aux = aux.substring(iInicioClase + GNUSmalltalk.Marca.inicioClase.toString().length(), aux.length()).trim();
+						aux = aux.substring(iInicioClase + inicioClase.length(), aux.length()).trim();
 						pilaDeClase.add(aux);
 						lineaActual += " \"Comienzo de la clase " + aux + "\"";
 					}
@@ -68,11 +72,11 @@ public class DelimitadorDeClasesYMetodos extends ComponenteDeProcesamiento {
 	}
 
 	private boolean abreBloque(String c) {
-		return (c.equals(GNUSmalltalk.Marca.aperturaBloque.toString()));
+		return (c.equals(aperturaBloque));
 	}
 
 	private boolean cierraBloque(String c) {
-		return (c.equals(GNUSmalltalk.Marca.cierreBloque.toString()));
+		return (c.equals(cierreBloque));
 	}
 
 }
