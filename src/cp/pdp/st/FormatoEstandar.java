@@ -19,8 +19,11 @@ public class FormatoEstandar extends ComponenteDeProcesamiento {
 
 	@Override
 	public List<String> ejecutar(List<String> archivo) {
-		//Inserta saltos de línea después de un bloque de apertura o de cierre.
-		//Como cada línea se puede porcesar de forma independiente lo hago de forma paralela
+		/*
+		 * Inserta saltos de línea después de un bloque de apertura o de cierre.
+		 * Como cada línea se puede porcesar de forma independiente, se hace de forma paralela
+		 * Los ArrayLists son mejores para procesamiento en paralelo.
+		 */
 		return new ArrayList<>(archivo).parallelStream().map(lineaActual -> {
 			List<String> lineaTransformada = new ArrayList<>();
 			Map<Integer, GNUSmalltalk.Marca> mapa = new TreeMap<>();

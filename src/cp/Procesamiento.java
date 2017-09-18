@@ -14,25 +14,15 @@ public class Procesamiento {
 
 	private List<String> archivo = new LinkedList<>();
 	private List<ComponenteDeProcesamiento> proceso;
-	private Lenguaje lenguaje;
 
 	public Procesamiento(Lenguaje lenguaje) throws UnsupportedLanguageException {
-		this.lenguaje = lenguaje;
 		generarConfiguracion(lenguaje);
 	}
 
-	public boolean run(File fileIn, File fileOut) {
-		boolean lecturaCorrecta = true, escrituraCorrecta = true;
-		if(!leerArchivo(fileIn)){
-			lecturaCorrecta = false;
-		}
-
+	public void run(File fileIn, File fileOut) {
+		leerArchivo(fileIn);
 		ejecutarComponentesDeProcesamiento();
-
-		if(!escribirArchivo(fileOut)){
-			escrituraCorrecta = false;
-		}
-		return lecturaCorrecta && escrituraCorrecta;
+		escribirArchivo(fileOut);
 	}
 
 	private void generarConfiguracion(Lenguaje lenguaje) throws UnsupportedLanguageException {
@@ -42,10 +32,7 @@ public class Procesamiento {
 		}
 	}
 
-	private boolean leerArchivo(File file) {
-		if(file == null){
-			return false;
-		}
+	private void leerArchivo(File file) {
 		try(FileReader fr = new FileReader(file);
 				BufferedReader br = new BufferedReader(fr);){
 			String linea;
@@ -54,27 +41,20 @@ public class Procesamiento {
 				archivo.add(linea);
 			}
 		} catch(Exception e){
-			e.printStackTrace(); //TODO Manejar excepcion.
-			return false;
+			e.printStackTrace();
 		}
-		return true;
 	}
 
 	private void ejecutarComponentesDeProcesamiento() {
 		proceso.forEach(componenteDeProcesamiento -> archivo = componenteDeProcesamiento.ejecutar(archivo));
 	}
 
-	private boolean escribirArchivo(File file) {
-		if(file == null){
-			return false;
-		}
+	private void escribirArchivo(File file) {
 		try(FileWriter fichero = new FileWriter(file);
 				PrintWriter pw = new PrintWriter(fichero);){
 			archivo.forEach(linea -> pw.println(linea));
-		} catch(Exception e) {
-			e.printStackTrace(); //TODO Manejar excepcion.
-			return false;
+		} catch(Exception e){
+			e.printStackTrace();
 		}
-		return true;
 	}
 }
