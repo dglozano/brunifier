@@ -6,8 +6,6 @@ import java.util.List;
 
 import cp.ComponenteDeProcesamiento;
 import cp.Lenguaje;
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
 
 public class CMasMasProcedural extends Lenguaje {
 	

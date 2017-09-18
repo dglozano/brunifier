@@ -3,11 +3,8 @@ package cp;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
-
 public abstract class Lenguaje {
-	
+
 	public Lenguaje() {
 		super();
 	}
