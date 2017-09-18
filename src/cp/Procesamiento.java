@@ -9,32 +9,30 @@ import java.util.LinkedList;
 import java.util.List;
 
 import cp.exception.UnsupportedLanguageException;
-import javafx.stage.Stage;
 
 public class Procesamiento {
 
 	private List<String> archivo = new LinkedList<>();
 	private List<ComponenteDeProcesamiento> proceso;
 	private Lenguaje lenguaje;
-	private Stage stage;
 
-	public Procesamiento(Lenguaje lenguaje, Stage stage) throws UnsupportedLanguageException {
+	public Procesamiento(Lenguaje lenguaje) throws UnsupportedLanguageException {
 		this.lenguaje = lenguaje;
-		this.stage = stage;
 		generarConfiguracion(lenguaje);
 	}
 
-	public boolean run() {
-		if(!leerArchivo()){
-			return false;
+	public boolean run(File fileIn, File fileOut) {
+		boolean lecturaCorrecta = true, escrituraCorrecta = true;
+		if(!leerArchivo(fileIn)){
+			lecturaCorrecta = false;
 		}
 
 		ejecutarComponentesDeProcesamiento();
 
-		if(!escribirArchivo()){
-			return false;
+		if(!escribirArchivo(fileOut)){
+			escrituraCorrecta = false;
 		}
-		return true;
+		return lecturaCorrecta && escrituraCorrecta;
 	}
 
 	private void generarConfiguracion(Lenguaje lenguaje) throws UnsupportedLanguageException {
@@ -44,8 +42,7 @@ public class Procesamiento {
 		}
 	}
 
-	private boolean leerArchivo() {
-		File file = lenguaje.getFileChooser().showOpenDialog(stage);
+	private boolean leerArchivo(File file) {
 		if(file == null){
 			return false;
 		}
@@ -57,26 +54,25 @@ public class Procesamiento {
 				archivo.add(linea);
 			}
 		} catch(Exception e){
-			e.printStackTrace(); //TODO Manejar excepci�n.
+			e.printStackTrace(); //TODO Manejar excepcion.
 			return false;
 		}
 		return true;
 	}
 
 	private void ejecutarComponentesDeProcesamiento() {
-		proceso.forEach(actual -> archivo = actual.ejecutar(archivo));
+		proceso.forEach(componenteDeProcesamiento -> archivo = componenteDeProcesamiento.ejecutar(archivo));
 	}
 
-	private boolean escribirArchivo() {
-		File file = lenguaje.getFileChooser().showSaveDialog(stage);
+	private boolean escribirArchivo(File file) {
 		if(file == null){
 			return false;
 		}
 		try(FileWriter fichero = new FileWriter(file);
 				PrintWriter pw = new PrintWriter(fichero);){
 			archivo.forEach(linea -> pw.println(linea));
-		} catch(Exception e){
-			e.printStackTrace(); //TODO Manejar excepci�n.
+		} catch(Exception e) {
+			e.printStackTrace(); //TODO Manejar excepcion.
 			return false;
 		}
 		return true;
