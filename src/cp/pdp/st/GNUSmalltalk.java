@@ -6,8 +6,6 @@ import java.util.List;
 
 import cp.ComponenteDeProcesamiento;
 import cp.Lenguaje;
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
 
 public class GNUSmalltalk extends Lenguaje {
 
@@ -25,21 +23,18 @@ public class GNUSmalltalk extends Lenguaje {
 			return nombre;
 		}
 	}
-
+	
 	@Override
-	public FileChooser getFileChooser() {
-		String tipo = "(*.st, *.txt)";
-
+	public String getNombreFiltro() {
+		return "Archivo Smalltalk (*.st, *.txt)";
+	}
+	
+	@Override
+	public ArrayList<String> getTiposFiltro() {
 		ArrayList<String> tiposFiltro = new ArrayList<>();
 		tiposFiltro.add("*.st");
 		tiposFiltro.add("*.txt");
-
-		ExtensionFilter filtro = new ExtensionFilter("Archivo Smalltalk " + tipo, tiposFiltro);
-
-		FileChooser archivoSeleccionado = new FileChooser();
-		archivoSeleccionado.getExtensionFilters().add(filtro);
-
-		return archivoSeleccionado;
+		return tiposFiltro;
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package ui;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +22,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -85,23 +88,44 @@ public class Main extends Application {
 
 	private void procesar(Lenguaje lenguaje) {
 		try{
-			Procesamiento procesamiento = new Procesamiento(lenguaje, primaryStage);
+			Procesamiento procesamiento = new Procesamiento(lenguaje);
 			boolean seguir = true;
 			while(seguir){
-				seguir = procesamiento.run();
+				File fileIn = getFileChooser(lenguaje).showOpenDialog(primaryStage);
+				if(fileIn == null){
+					seguir = false;
+				}
+				else{
+					File fileOut = getFileChooser(lenguaje).showSaveDialog(primaryStage);
+					if(fileOut == null){
+						seguir = false;
+					}
+					else{
+						new Thread(() -> procesamiento.run(fileIn, fileOut)).start();
+					}
+				}
 			}
 			Platform.exit();
-		} catch(UnsupportedLanguageException e) {
+		} catch(UnsupportedLanguageException e){
 			e.printStackTrace();
 			mostrarError(e.getMessage());
 		}
 	}
-	
+
+	private FileChooser getFileChooser(Lenguaje lenguaje) {
+		ExtensionFilter filtro = new ExtensionFilter(lenguaje.getNombreFiltro(), lenguaje.getTiposFiltro());
+
+		FileChooser archivoSeleccionado = new FileChooser();
+		archivoSeleccionado.getExtensionFilters().add(filtro);
+
+		return archivoSeleccionado;
+	}
+
 	private void mostrarError(String errorMsg) {
 		Alert error = new Alert(AlertType.ERROR);
-		try {
+		try{
 			error.initOwner(primaryStage);
-		} catch(NullPointerException exc) {
+		} catch(NullPointerException exc){
 			exc.printStackTrace();
 		}
 		error.setContentText(errorMsg);
@@ -110,7 +134,7 @@ public class Main extends Application {
 		error.showAndWait();
 	}
 
-	//TODO agregar a la lista al agregar un lenguaje
+	//TODO al agregar un lenguaje, agregarlo a la lista del método
 	public List<Lenguaje> lenguajesSoportados() {
 		List<Lenguaje> lenguajesSoportados = new ArrayList<>();
 		lenguajesSoportados.add(new CMasMasProcedural());
