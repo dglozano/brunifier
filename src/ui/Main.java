@@ -89,27 +89,41 @@ public class Main extends Application {
 	private void procesar(Lenguaje lenguaje) {
 		try{
 			Procesamiento procesamiento = new Procesamiento(lenguaje);
-			boolean seguir = true;
-			while(seguir){
-				File fileIn = getFileChooser(lenguaje).showOpenDialog(primaryStage);
-				if(fileIn == null){
-					seguir = false;
-				}
-				else{
-					File fileOut = getFileChooser(lenguaje).showSaveDialog(primaryStage);
-					if(fileOut == null){
-						seguir = false;
+			List<File> archivos = getFileChooser(lenguaje).showOpenMultipleDialog(primaryStage);
+			if(archivos != null){
+				archivos.parallelStream().forEach(fileIn -> {
+					String[] nombreExtension = this.stripExtension(fileIn.getName());
+					File fileOut = new File(fileIn.getParentFile(), nombreExtension[0] + "ConMarcas" + nombreExtension[1]);
+					if(fileOut.exists()){
+						fileOut.delete();
 					}
-					else{
-						new Thread(() -> procesamiento.run(fileIn, fileOut)).start();
-					}
-				}
+					new Thread(() -> procesamiento.run(fileIn, fileOut)).start();
+				});
 			}
 			Platform.exit();
 		} catch(UnsupportedLanguageException e){
 			e.printStackTrace();
 			mostrarError(e.getMessage());
 		}
+	}
+
+	private String[] stripExtension(String str) {
+
+		// Handle null case specially.
+		if(str == null){
+			return null;
+		}
+
+		// Get position of last '.'.
+		int pos = str.lastIndexOf(".");
+
+		// If there wasn't any '.' just return the string as is.
+		if(pos == -1){
+			return new String[] { str, "" };
+		}
+
+		// Otherwise return the string, up to the dot.
+		return new String[] { str.substring(0, pos), str.substring(pos) };
 	}
 
 	private FileChooser getFileChooser(Lenguaje lenguaje) {
