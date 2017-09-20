@@ -35,6 +35,9 @@ switch(t) {
 case 0: {
 if(t==0) {
 //hacer algo
+while(t<5) {
+t++;
+}
 switch(t+1) {
 case 0: break;
 default: {
@@ -67,5 +70,8 @@ r = x+y;
 for(int j=0;j<10;j++) {
 cout<<j;
 }
+do {
+cout << r++ << endl;
+} while(r<10);
 return r;
 }
