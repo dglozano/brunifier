@@ -41,7 +41,9 @@ public class DelimitadorDeBloques extends ComponenteDeProcesamiento {
 						lineaEnPila.setNumLineaYaMostrado(true);
 					}
 				}
-				pilaDeBloquesAbiertos.add(lineaEnPila.setCodLinea(aux));
+				if(!lineaOriginal.startsWith("do")) {
+					pilaDeBloquesAbiertos.add(lineaEnPila.setCodLinea(aux));
+				}
 				lineaConMarca = lineaOriginal;
 			}
 			else{
@@ -54,7 +56,7 @@ public class DelimitadorDeBloques extends ComponenteDeProcesamiento {
 				}
 				else{
 					if(lineaOriginal.equals("};")){
-						String marca = "//CIERRA LA DEFINICIÓN DE " + pilaDeBloquesAbiertos.remove(pilaDeBloquesAbiertos.size() - 1).toString();
+						String marca = "//CIERRA LA DEFINICION DE " + pilaDeBloquesAbiertos.remove(pilaDeBloquesAbiertos.size() - 1).toString();
 						lineaConMarca = lineaOriginal + marca;
 					}
 					else{

@@ -8,6 +8,10 @@ float c;
 struct pepe {
 	float c;
 };
+void funcion() {
+for(int i=0;i<5;i++)
+cout << "Hola" << endl;
+}
 int main(int argc, char *argv[]) {
 float cordenadax, cordenaday;
 int t=0,o[10]={0};
@@ -35,6 +39,9 @@ switch(t) {
 case 0: {
 if(t==0) {
 //hacer algo
+while(t<5) {
+t++;
+}
 switch(t+1) {
 case 0: break;
 default: {
@@ -67,5 +74,11 @@ r = x+y;
 for(int j=0;j<10;j++) {
 cout<<j;
 }
+do {
+cout << r++ << endl;
+} while(r<10);
 return r;
+}
+void funcion2(int x) {
+cout << "funcion2" << x << endl;
 }
