@@ -3,11 +3,12 @@ package cp.aedd;
 import java.util.List;
 
 import cp.ComponenteDeProcesamiento;
+import cp.Linea;
 
 public class FormatoEstandar extends ComponenteDeProcesamiento {
 
 	@Override
-	public List<String> ejecutar(List<String> archivo) {
+	public List<Linea> ejecutar(List<Linea> archivo) {
 		//TODO Hacer.
 		return archivo;
 	}

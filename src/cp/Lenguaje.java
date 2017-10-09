@@ -20,6 +20,10 @@ public abstract class Lenguaje {
 	public ArrayList<String> getTiposFiltro() {
 		return new ArrayList<>();
 	}
+	
+	public Linea createLinea() {
+		return null;
+	}
 
 	@Override
 	public abstract String toString();

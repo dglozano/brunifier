@@ -1,34 +1,26 @@
 package cp;
 
-public class Linea {
+public abstract class Linea {
 
-	  private int numLinea;
-	  private String codLinea;
-	  private boolean numLineaYaMostrado; //Si es una linea con Marcas sobre bloques else o switch, el toString no agrega numLinea al final
+	  private int numeroLinea;
+	  private String codigoLinea;
+	  private String marca;
 
-	  public Linea(int numLinea, String codLinea) {
-	    this.numLinea = numLinea;
-	    this.codLinea = codLinea;
-	    this.numLineaYaMostrado = false;
-	  }
-
-	  public int getNumLinea() { return numLinea; }
-	  public String getCodLinea() { return codLinea; }
-	  public String toString() {
-		  return numLineaYaMostrado ? codLinea : codLinea + " EN LINEA " + numLinea;
+	  public int getNumeroLinea() { return numeroLinea; }
+	  public String getCodigoLinea() { return codigoLinea; }
+	  public String getMarca() { return marca; }
+	  
+	  public void setCodigoLinea(String codigoLinea) {
+		  this.codigoLinea = codigoLinea;
 	  }
 	  
-	  public Linea setCodLinea(String codLinea) {
-		  this.codLinea = codLinea;
-		  return this;
+	  public void setNumeroLinea(int numeroLinea) {
+		  this.numeroLinea = numeroLinea;
 	  }
 	  
-	  public Linea setNumLinea(int numLinea) {
-		  this.numLinea = numLinea;
-		  return this;
+	  public void setMarca(String marca) {
+		  this.marca = marca;
 	  }
 	  
-	  public void setNumLineaYaMostrado(boolean f) {
-		  this.numLineaYaMostrado = f;
-	  }
+	  public abstract String getLineaConMarca();
 }

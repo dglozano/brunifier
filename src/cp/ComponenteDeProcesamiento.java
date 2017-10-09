@@ -8,6 +8,6 @@ public abstract class ComponenteDeProcesamiento {
 		super();
 	}
 
-	public abstract List<String> ejecutar(List<String> archivo);
+	public abstract List<Linea> ejecutar(List<Linea> archivo);
 
 }
