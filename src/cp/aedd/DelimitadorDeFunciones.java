@@ -11,9 +11,9 @@ public class DelimitadorDeFunciones extends ComponenteDeProcesamiento {
 	//TODO Hacer que la Clase Linea tenga atributo marca, atributo linea original y metodos utiles comunes a todos los cp
 	
 	@Override
-	public List<String> ejecutar(List<String> archivo) {
+	public List<Linea> ejecutar(List<Linea> archivo) {
 		// Uso Array List porque es mas eficiente la operacion get(i) y no necesito hacer add()
-		List<String> archivoTransformado = new ArrayList<>(archivo);
+		List<Linea> archivoTransformado = new ArrayList<>(archivo);
 		List<Linea> pilaDeBloquesAbiertos = new ArrayList<>();
 		boolean apilar = false;
 		int numLinea = 1;

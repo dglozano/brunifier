@@ -12,10 +12,12 @@ import cp.exception.UnsupportedLanguageException;
 
 public class Procesamiento {
 
-	private List<String> archivo = new LinkedList<>();
+	private List<Linea> archivo = new LinkedList<>();
 	private List<ComponenteDeProcesamiento> proceso;
-
+	private Lenguaje lenguaje;
+	
 	public Procesamiento(Lenguaje lenguaje) throws UnsupportedLanguageException {
+		this.lenguaje = lenguaje;
 		generarConfiguracion(lenguaje);
 	}
 
@@ -35,10 +37,16 @@ public class Procesamiento {
 	private void leerArchivo(File file) {
 		try(FileReader fr = new FileReader(file);
 				BufferedReader br = new BufferedReader(fr);){
-			String linea;
+			String lineaString;
+			int i = 1;
 			archivo.clear();
-			while((linea = br.readLine()) != null){
+			while((lineaString = br.readLine()) != null){
+				Linea linea = lenguaje.createLinea();
+				linea.setCodigoLinea(lineaString);
+				linea.setMarca("");
+				linea.setNumeroLinea(i);
 				archivo.add(linea);
+				
 			}
 		} catch(Exception e){
 			e.printStackTrace();
@@ -52,7 +60,7 @@ public class Procesamiento {
 	private void escribirArchivo(File file) {
 		try(FileWriter fichero = new FileWriter(file);
 				PrintWriter pw = new PrintWriter(fichero);){
-			archivo.forEach(linea -> pw.println(linea));
+			archivo.forEach(linea -> pw.println(linea.getLineaConMarca()));
 		} catch(Exception e){
 			e.printStackTrace();
 		}

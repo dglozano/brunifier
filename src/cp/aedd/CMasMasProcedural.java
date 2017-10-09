@@ -14,7 +14,7 @@ public class CMasMasProcedural extends Lenguaje {
 		List<ComponenteDeProcesamiento> proceso = new LinkedList<>();
 		proceso.add(new FormatoEstandar());
 		proceso.add(new DelimitadorDeBloques());
-		proceso.add(new DelimitadorDeFunciones());
+		//proceso.add(new DelimitadorDeFunciones());
 		return proceso;
 	}
 	
@@ -31,6 +31,11 @@ public class CMasMasProcedural extends Lenguaje {
 		return tiposFiltro;
 	}
 
+	@Override
+	public LineaCMasMas createLinea() {
+		return new LineaCMasMas();
+	}
+	
 	@Override
 	public String toString() {
 		return "C++ Procedural";
