@@ -3,81 +3,51 @@ package cp.aedd;
 import java.util.ArrayList;
 import java.util.List;
 
+import cp.Archivo;
 import cp.ComponenteDeProcesamiento;
-import cp.Linea;
 
 public class DelimitadorDeFunciones extends ComponenteDeProcesamiento {
-	
-	//TODO Hacer que la Clase Linea tenga atributo marca, atributo linea original y metodos utiles comunes a todos los cp
+		
+	private boolean apilar = false;
 	
 	@Override
-	public List<Linea> ejecutar(List<Linea> archivo) {
-		// Uso Array List porque es mas eficiente la operacion get(i) y no necesito hacer add()
-		List<Linea> archivoTransformado = new ArrayList<>(archivo);
-		List<Linea> pilaDeBloquesAbiertos = new ArrayList<>();
-		boolean apilar = false;
-		int numLinea = 1;
-		for(String lineaOriginal: archivo) {
-			if(abreBloque(lineaOriginal.charAt(lineaOriginal.length() - 1))){
-				Linea lineaEnPila = new Linea(numLinea,"");
-				String aux = lineaOriginal.substring(0, lineaOriginal.length() - 2);
-				if(esCabeceraDeFuncion(lineaOriginal)){
-					//Solo si es una cabecera de funcion, empiezo a apilar bloques
+	public Archivo ejecutar(Archivo archivo) {
+		ArchivoCMasMas archivoTransformado = (ArchivoCMasMas) archivo;
+		List<LineaCMasMas> pilaDeBloquesAbiertos = new ArrayList<>();
+		archivoTransformado.getLineasCMasMas().forEach(lineaOriginal -> {
+			int numLinea = lineaOriginal.getNumeroLinea();
+			if(lineaOriginal.abreBloque()){
+				if(lineaOriginal.esCabeceraDeFuncion()){
+					// Solo si la linea es una cabecera de funcion, empiezo a apilar bloques
 					apilar = true;
-					pilaDeBloquesAbiertos.add(lineaEnPila.setCodLinea(aux));
+					pilaDeBloquesAbiertos.add(lineaOriginal);
 				}
 				else {
-					if(apilar && !lineaOriginal.startsWith("do")) {
-						pilaDeBloquesAbiertos.add(lineaEnPila.setCodLinea(aux));
+					/*
+					 * Si la linea abre un bloque que no es una cabecera de funcion y apilar esta en "true"
+					 * quiere decir que los bloques estan dentro de la implementacion de la funcion, entonces los apilo. 
+					 */
+					if(apilar && !lineaOriginal.esDo()) {
+						pilaDeBloquesAbiertos.add(lineaOriginal);
 					}
 				}
 			}
 			else{
-				if(apilar && lineaOriginal.startsWith("}")){
-					Linea topePila = pilaDeBloquesAbiertos.remove(pilaDeBloquesAbiertos.size() - 1);
-					if(pilaDeBloquesAbiertos.size() == 0) {
+				if(apilar && lineaOriginal.cierraBloque()){
+					LineaCMasMas topePila = pilaDeBloquesAbiertos.remove(pilaDeBloquesAbiertos.size() - 1);
+					if(pilaDeBloquesAbiertos.isEmpty()) {
 						/*
 						 * Si la pila queda vacia, es porque la linea removida corresponde a la cabecera de funcion
 						 * Entonces, reemplazo esa linea del archivo por la misma mas la marca y dejo de apilar
 						 */
-						String aux = topePila.getCodLinea();
-						aux += "// FUNCION DEFINIDA ENTRE LAS LINEAS " + topePila.getNumLinea();
-						aux += " Y " + numLinea;
-						archivoTransformado.set(topePila.getNumLinea()-1, aux);
+						topePila.addMarca("FUNCION DEFINIDA ENTRE LAS LINEAS");
+						topePila.addMarca(topePila.getNumeroLinea() + " Y " + numLinea);
+						archivoTransformado.putLinea(topePila);
 						apilar = false;
 					}
 				}
 			}
-			numLinea++;
-		}
+		});
 		return archivoTransformado;
-	}
-
-	private boolean abreBloque(char c) {
-		return (c == '{');
-	}
-
-	private boolean cierraBloque(char c) {
-		return (c == '}');
-	}
-	
-	private boolean esCabeceraDeFuncion(String l) {
-		boolean esCabecera = false;
-		//Tiene que tener un parentesis que abre y otro que cierra despues del que abre
-		int parentesisAbrePos = l.indexOf('(');
-		int parentesisCierraPos = l.indexOf(')', parentesisAbrePos);
-		if(parentesisAbrePos != -1 && parentesisCierraPos != -1) {
-			// Tiene que tener dos palabras separadas por un espacio antes de los parentesis
-			String primeraParte = l.substring(0, parentesisAbrePos);
-			esCabecera = contarPalabras(primeraParte) == 2;
-		}
-		return esCabecera;
-	}
-	
-	private int contarPalabras(String s) {
-		String trim = s.trim();
-		if (trim.isEmpty())
-		    return 0;
-		return trim.split("\\s+").length;
 	}
 }

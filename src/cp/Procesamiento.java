@@ -5,20 +5,18 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
-import java.util.LinkedList;
 import java.util.List;
 
 import cp.exception.UnsupportedLanguageException;
 
 public class Procesamiento {
 
-	private List<Linea> archivo = new LinkedList<>();
+	private Archivo archivo;
 	private List<ComponenteDeProcesamiento> proceso;
-	private Lenguaje lenguaje;
 	
 	public Procesamiento(Lenguaje lenguaje) throws UnsupportedLanguageException {
-		this.lenguaje = lenguaje;
 		generarConfiguracion(lenguaje);
+		this.archivo = lenguaje.createArchivo();
 	}
 
 	public void run(File fileIn, File fileOut) {
@@ -38,15 +36,9 @@ public class Procesamiento {
 		try(FileReader fr = new FileReader(file);
 				BufferedReader br = new BufferedReader(fr);){
 			String lineaString;
-			int i = 1;
 			archivo.clear();
 			while((lineaString = br.readLine()) != null){
-				Linea linea = lenguaje.createLinea();
-				linea.setCodigoLinea(lineaString);
-				linea.setMarca("");
-				linea.setNumeroLinea(i);
-				archivo.add(linea);
-				
+				archivo.addLinea(lineaString);
 			}
 		} catch(Exception e){
 			e.printStackTrace();
@@ -60,7 +52,7 @@ public class Procesamiento {
 	private void escribirArchivo(File file) {
 		try(FileWriter fichero = new FileWriter(file);
 				PrintWriter pw = new PrintWriter(fichero);){
-			archivo.forEach(linea -> pw.println(linea.getLineaConMarca()));
+			archivo.getLineas().forEach(linea -> pw.println(linea.toString()));
 		} catch(Exception e){
 			e.printStackTrace();
 		}

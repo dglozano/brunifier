@@ -152,8 +152,8 @@ public class Main extends Application {
 	public List<Lenguaje> lenguajesSoportados() {
 		List<Lenguaje> lenguajesSoportados = new ArrayList<>();
 		lenguajesSoportados.add(new CMasMasProcedural());
-		//lenguajesSoportados.add(new GNUSmalltalk());
-		//lenguajesSoportados.add(new PharoToGNUSmalltalk());
+		lenguajesSoportados.add(new GNUSmalltalk());
+		lenguajesSoportados.add(new PharoToGNUSmalltalk());
 		return lenguajesSoportados;
 	}
 }

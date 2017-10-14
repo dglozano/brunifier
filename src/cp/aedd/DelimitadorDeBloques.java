@@ -1,67 +1,62 @@
 package cp.aedd;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
+import cp.Archivo;
 import cp.ComponenteDeProcesamiento;
-import cp.Linea;
 
 public class DelimitadorDeBloques extends ComponenteDeProcesamiento {
 
 	@Override
-	public List<Linea> ejecutar(List<Linea> archivo) {
-		List<Linea> archivoTransformado = new LinkedList<>();
+	public Archivo ejecutar(Archivo archivo) {
+		ArchivoCMasMas archivoTransformado = (ArchivoCMasMas) archivo;
 		//ArrayList es más eficiente para quitar al final, es decir, como pila
 		List<LineaCMasMas> pilaDeBloquesAbiertos = new ArrayList<>();
 		List<LineaCMasMas> pilaDeIf = new ArrayList<>();
 		List<LineaCMasMas> pilaDeSwitch = new ArrayList<>();
-		for(int numLinea=1; numLinea <= archivo.size(); numLinea++){
-			LineaCMasMas lineaOriginalCMasMas = (LineaCMasMas)archivo.get(numLinea-1);
-			if(lineaOriginalCMasMas.abreBloque()) {
-				LineaCMasMas lineaEnPila = new LineaCMasMas();
-				lineaEnPila.setNumeroLinea(numLinea);
-				lineaEnPila.setCodigoLinea("");
-				lineaEnPila.setMarca(lineaOriginalCMasMas.getCodigoLineaSinFinal());
-				if(lineaOriginalCMasMas.esIf()) {
+		archivoTransformado.getLineasCMasMas().forEach(lineaOriginal -> {
+			if(lineaOriginal.abreBloque()) {
+				int numLinea = lineaOriginal.getNumeroLinea();
+				LineaCMasMas lineaEnPila = new LineaCMasMas("", lineaOriginal.getCodigoLineaSinFinal(), numLinea);
+				if(lineaOriginal.esIf()) {
 					pilaDeIf.add(lineaEnPila);
 				}
-				else if(lineaOriginalCMasMas.esSwitch()) {
+				else if(lineaOriginal.esSwitch()) {
 					pilaDeSwitch.add(lineaEnPila);
 				}
-				if(lineaOriginalCMasMas.tieneElse()) {
+				if(lineaOriginal.tieneElse()) {
 					String aux = "EN LINEA " + numLinea + " DE " + pilaDeIf.remove(pilaDeIf.size() - 1).getMarcaConNumero();
 					lineaEnPila.addMarca(aux) ;
 					lineaEnPila.setNumeroLineaYaMostrado(true);
 				}
 				else {
-					if(lineaOriginalCMasMas.esCase() || lineaOriginalCMasMas.esDefault()) {
+					if(lineaOriginal.esCase() || lineaOriginal.esDefault()) {
 						String aux = "EN LINEA " + numLinea + " DE " + pilaDeSwitch.get(pilaDeSwitch.size() - 1).getMarcaConNumero();
 						lineaEnPila.addMarca(aux) ;
 						lineaEnPila.setNumeroLineaYaMostrado(true);
 					}
 				}
-				if(!lineaOriginalCMasMas.esDo()) {
+				if(!lineaOriginal.esDo()) {
 					pilaDeBloquesAbiertos.add(lineaEnPila);
 				}
 			}
 			else{
-				if(lineaOriginalCMasMas.cierraBloque()){
+				if(lineaOriginal.cierraBloque()){
 					LineaCMasMas lineaTopePila = pilaDeBloquesAbiertos.remove(pilaDeBloquesAbiertos.size() - 1);
-					lineaOriginalCMasMas.setMarca("CIERRA EL BLOQUE DE " + lineaTopePila.getMarcaConNumero());
+					lineaOriginal.setMarca("CIERRA EL BLOQUE DE " + lineaTopePila.getMarcaConNumero());
 					if(lineaTopePila.getMarca().startsWith("switch")){
 						pilaDeSwitch.remove(pilaDeSwitch.size() - 1);
 					}
 				}
 				else{
-					if(lineaOriginalCMasMas.cierraStruct()){
+					if(lineaOriginal.cierraStruct()){
 						LineaCMasMas lineaTopePila = pilaDeBloquesAbiertos.remove(pilaDeBloquesAbiertos.size() - 1);
-						lineaOriginalCMasMas.setMarca("CIERRA LA DEFINICION DE " + lineaTopePila.getMarcaConNumero());
+						lineaOriginal.setMarca("CIERRA LA DEFINICION DE " + lineaTopePila.getMarcaConNumero());
 					}
 				}
 			}
-			archivoTransformado.add(lineaOriginalCMasMas);
-		}
+		});
 		return archivoTransformado;
 	}
 }

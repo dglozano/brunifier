@@ -21,7 +21,7 @@ public abstract class Lenguaje {
 		return new ArrayList<>();
 	}
 	
-	public Linea createLinea() {
+	public Archivo createArchivo() {
 		return null;
 	}
 
