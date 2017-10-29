@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
+import cp.Archivo;
 import cp.ComponenteDeProcesamiento;
 import cp.pdp.st.GNUSmalltalk.Marca;
 
@@ -18,13 +19,14 @@ public class FormatoEstandar extends ComponenteDeProcesamiento {
 	};
 
 	@Override
-	public List<String> ejecutar(List<String> archivo) {
+	public Archivo<?> ejecutar(Archivo<?> archivo) {
 		/*
 		 * Inserta saltos de línea después de un bloque de apertura o de cierre.
 		 * Como cada línea se puede porcesar de forma independiente, se hace de forma paralela
 		 * Los ArrayLists son mejores para procesamiento en paralelo.
 		 */
-		return new ArrayList<>(archivo).parallelStream().map(lineaActual -> {
+		ArchivoGNUSmalltalk nuevoArchivo = new ArchivoGNUSmalltalk();
+		new ArrayList<>(archivo.getLineas()).parallelStream().map(linea -> linea.getCodigoLinea()).map(lineaActual -> {
 			List<String> lineaTransformada = new ArrayList<>();
 			Map<Integer, GNUSmalltalk.Marca> mapa = new TreeMap<>();
 			this.hacerMapaCon(mapa, lineaActual);
@@ -53,7 +55,9 @@ public class FormatoEstandar extends ComponenteDeProcesamiento {
 			return lineaTransformada;
 
 			//Al finalizar paso de procesamiento paralelo a secuencial para mantener el orden de las líneas
-		}).collect(Collectors.toList()).stream().flatMap(List::stream).collect(Collectors.toList());
+		}).collect(Collectors.toList()).stream().flatMap(List::stream).collect(Collectors.toList())
+				.forEach(linea -> nuevoArchivo.addLinea(linea));
+		return nuevoArchivo;
 	}
 
 	private void hacerMapaCon(Map<Integer, Marca> mapa, String lineaConMarca) {

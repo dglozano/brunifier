@@ -1,80 +1,62 @@
 package cp.aedd;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
+import cp.Archivo;
 import cp.ComponenteDeProcesamiento;
-import cp.Linea;
 
 public class DelimitadorDeBloques extends ComponenteDeProcesamiento {
 
 	@Override
-	public List<String> ejecutar(List<String> archivo) {
-		List<String> archivoTransformado = new LinkedList<>();
+	public Archivo<?> ejecutar(Archivo<?> archivo) {
+		ArchivoCMasMas archivoTransformado = (ArchivoCMasMas) archivo;
 		//ArrayList es más eficiente para quitar al final, es decir, como pila
-		List<Linea> pilaDeBloquesAbiertos = new ArrayList<>();
-		List<Linea> pilaDeIf = new ArrayList<>();
-		List<Linea> pilaDeSwitch = new ArrayList<>();
-		int numLinea = 1;
-		for(String lineaOriginal: archivo) {
-			String lineaConMarca = "";
-			if(abreBloque(lineaOriginal.charAt(lineaOriginal.length() - 1))){
-				Linea lineaEnPila = new Linea(numLinea,"");
-				String aux = lineaOriginal.substring(0, lineaOriginal.length() - 2);
-				if(aux.endsWith(":")){
-					aux = aux.substring(0, aux.length() - 1);
+		List<LineaCMasMas> pilaDeBloquesAbiertos = new ArrayList<>();
+		List<LineaCMasMas> pilaDeIf = new ArrayList<>();
+		List<LineaCMasMas> pilaDeSwitch = new ArrayList<>();
+		archivoTransformado.getLineas().forEach(lineaOriginal -> {
+			if(lineaOriginal.abreBloque()){
+				int numLinea = lineaOriginal.getNumeroLinea();
+				LineaCMasMas lineaEnPila = new LineaCMasMas("", lineaOriginal.getCodigoLineaSinFinal(), numLinea);
+				if(lineaOriginal.esIf()){
+					pilaDeIf.add(lineaEnPila);
 				}
-				if(lineaOriginal.startsWith("if")){
-					pilaDeIf.add(lineaEnPila.setCodLinea(aux));
+				else if(lineaOriginal.esSwitch()){
+					pilaDeSwitch.add(lineaEnPila);
 				}
-				else if(lineaOriginal.startsWith("switch")){
-					pilaDeSwitch.add(lineaEnPila.setCodLinea(aux));
-				}
-				if(lineaOriginal.contains("else")){
-					aux = aux + " EN LINEA " + numLinea + " DE " + pilaDeIf.remove(pilaDeIf.size() - 1).toString() ;
-					lineaEnPila.setNumLineaYaMostrado(true);
+				if(lineaOriginal.tieneElse()){
+					String aux = "EN LINEA " + numLinea + " DE " + pilaDeIf.remove(pilaDeIf.size() - 1).getMarcaConNumero();
+					lineaEnPila.addMarca(aux);
+					lineaEnPila.setNumeroLineaYaMostrado(true);
 				}
 				else{
-					if(lineaOriginal.startsWith("case") || lineaOriginal.startsWith("default")){
-						aux = aux + " EN LINEA " + numLinea + " DE " + pilaDeSwitch.get(pilaDeSwitch.size() - 1).toString();
-						lineaEnPila.setNumLineaYaMostrado(true);
+					if(lineaOriginal.esCase() || lineaOriginal.esDefault()){
+						String aux = "EN LINEA " + numLinea + " DE " + pilaDeSwitch.get(pilaDeSwitch.size() - 1).getMarcaConNumero();
+						lineaEnPila.addMarca(aux);
+						lineaEnPila.setNumeroLineaYaMostrado(true);
 					}
 				}
-				if(!lineaOriginal.startsWith("do")) {
-					pilaDeBloquesAbiertos.add(lineaEnPila.setCodLinea(aux));
+				if(!lineaOriginal.esDo()){
+					pilaDeBloquesAbiertos.add(lineaEnPila);
 				}
-				lineaConMarca = lineaOriginal;
 			}
 			else{
-				if(cierraBloque(lineaOriginal.charAt(lineaOriginal.length() - 1))){
-					String marca = "//CIERRA EL BLOQUE DE " + pilaDeBloquesAbiertos.remove(pilaDeBloquesAbiertos.size() - 1).toString();
-					lineaConMarca = lineaOriginal + marca;
-					if(marca.startsWith("//CIERRA EL BLOQUE DE switch")){
+				if(lineaOriginal.cierraBloque()){
+					LineaCMasMas lineaTopePila = pilaDeBloquesAbiertos.remove(pilaDeBloquesAbiertos.size() - 1);
+					lineaOriginal.setMarca("CIERRA EL BLOQUE DE " + lineaTopePila.getMarcaConNumero());
+					if(lineaTopePila.getMarca().startsWith("switch")){
 						pilaDeSwitch.remove(pilaDeSwitch.size() - 1);
 					}
 				}
 				else{
-					if(lineaOriginal.equals("};")){
-						String marca = "//CIERRA LA DEFINICION DE " + pilaDeBloquesAbiertos.remove(pilaDeBloquesAbiertos.size() - 1).toString();
-						lineaConMarca = lineaOriginal + marca;
-					}
-					else{
-						lineaConMarca = lineaOriginal;
+					if(lineaOriginal.cierraStruct()){
+						LineaCMasMas lineaTopePila = pilaDeBloquesAbiertos.remove(pilaDeBloquesAbiertos.size() - 1);
+						lineaOriginal.setMarca("CIERRA LA DEFINICION DE " + lineaTopePila.getMarcaConNumero());
 					}
 				}
 			}
-			archivoTransformado.add(lineaConMarca);
-			numLinea++;
-		}
-		return archivoTransformado;
-	}
-
-	private boolean abreBloque(char c) {
-		return (c == '{');
-	}
-
-	private boolean cierraBloque(char c) {
-		return (c == '}');
+		});
+		return archivo;
 	}
 }

@@ -8,7 +8,7 @@ import cp.ComponenteDeProcesamiento;
 import cp.Lenguaje;
 
 public class CMasMasProcedural extends Lenguaje {
-	
+
 	@Override
 	public List<ComponenteDeProcesamiento> getProceso() {
 		List<ComponenteDeProcesamiento> proceso = new LinkedList<>();
@@ -17,18 +17,23 @@ public class CMasMasProcedural extends Lenguaje {
 		proceso.add(new DelimitadorDeFunciones());
 		return proceso;
 	}
-	
+
 	@Override
 	public String getNombreFiltro() {
 		return "Archivo C/C++ (*.cpp, *.c)";
 	}
-	
+
 	@Override
 	public ArrayList<String> getTiposFiltro() {
 		ArrayList<String> tiposFiltro = new ArrayList<>();
 		tiposFiltro.add("*.cpp");
 		tiposFiltro.add("*.c");
 		return tiposFiltro;
+	}
+
+	@Override
+	public ArchivoCMasMas createArchivo() {
+		return new ArchivoCMasMas();
 	}
 
 	@Override

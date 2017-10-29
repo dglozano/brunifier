@@ -23,12 +23,12 @@ public class GNUSmalltalk extends Lenguaje {
 			return nombre;
 		}
 	}
-	
+
 	@Override
 	public String getNombreFiltro() {
 		return "Archivo Smalltalk (*.st, *.txt)";
 	}
-	
+
 	@Override
 	public ArrayList<String> getTiposFiltro() {
 		ArrayList<String> tiposFiltro = new ArrayList<>();
@@ -43,6 +43,11 @@ public class GNUSmalltalk extends Lenguaje {
 		proceso.add(new FormatoEstandar());
 		proceso.add(new DelimitadorDeClasesYMetodos());
 		return proceso;
+	}
+
+	@Override
+	public ArchivoGNUSmalltalk createArchivo() {
+		return new ArchivoGNUSmalltalk();
 	}
 
 	@Override
