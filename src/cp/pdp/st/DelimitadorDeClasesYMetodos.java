@@ -1,9 +1,9 @@
 package cp.pdp.st;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
+import cp.Archivo;
 import cp.ComponenteDeProcesamiento;
 
 public class DelimitadorDeClasesYMetodos extends ComponenteDeProcesamiento {
@@ -13,15 +13,16 @@ public class DelimitadorDeClasesYMetodos extends ComponenteDeProcesamiento {
 	private static final String cierreBloque = GNUSmalltalk.Marca.cierreBloque.toString();
 
 	@Override
-	public List<String> ejecutar(List<String> archivo) {
-		List<String> archivoTransformado = new LinkedList<>();
+	public Archivo<?> ejecutar(Archivo<?> archivo) {
+		ArchivoGNUSmalltalk archivoTransformado = new ArchivoGNUSmalltalk();
 		//ArrayList es más eficiente para quitar al final, es decir, como pila
 		List<String> pilaDeBloquesAbiertos = new ArrayList<>();
 		List<String> pilaDeClase = new ArrayList<>();
 		List<String> pilaDeMetodo = new ArrayList<>();
 		List<Boolean> pilaDeTipoMetodoClase = new ArrayList<>();
 
-		archivo.forEach(lineaActual -> {
+		archivo.getLineas().forEach(linea -> {
+			String lineaActual = linea.getCodigoLinea();
 			if(!lineaActual.isEmpty()){
 				if(abreBloque(lineaActual.substring(lineaActual.length() - 1, lineaActual.length()))){
 					String aux = lineaActual.substring(0, lineaActual.length() - aperturaBloque.length());
@@ -66,7 +67,7 @@ public class DelimitadorDeClasesYMetodos extends ComponenteDeProcesamiento {
 					}
 				}
 			}
-			archivoTransformado.add(lineaActual);
+			archivoTransformado.addLinea(lineaActual);
 		});
 		return archivoTransformado;
 	}

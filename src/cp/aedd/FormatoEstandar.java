@@ -6,7 +6,7 @@ import cp.ComponenteDeProcesamiento;
 public class FormatoEstandar extends ComponenteDeProcesamiento {
 
 	@Override
-	public Archivo ejecutar(Archivo archivo) {
+	public Archivo<?> ejecutar(Archivo<?> archivo) {
 		//TODO Hacer.
 		return archivo;
 	}

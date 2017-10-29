@@ -29,6 +29,11 @@ public class PharoToGNUSmalltalk extends GNUSmalltalk {
 	}
 
 	@Override
+	public ArchivoGNUSmalltalk createArchivo() {
+		return new ArchivoGNUSmalltalk();
+	}
+
+	@Override
 	public List<ComponenteDeProcesamiento> getProceso() {
 		List<ComponenteDeProcesamiento> proceso = new LinkedList<>();
 		proceso.add(new ConversorPharoToGNUst());

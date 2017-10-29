@@ -11,9 +11,9 @@ import cp.exception.UnsupportedLanguageException;
 
 public class Procesamiento {
 
-	private Archivo archivo;
+	private Archivo<?> archivo;
 	private List<ComponenteDeProcesamiento> proceso;
-	
+
 	public Procesamiento(Lenguaje lenguaje) throws UnsupportedLanguageException {
 		generarConfiguracion(lenguaje);
 		this.archivo = lenguaje.createArchivo();

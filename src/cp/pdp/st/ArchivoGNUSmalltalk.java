@@ -1,29 +1,29 @@
-package cp.aedd;
+package cp.pdp.st;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cp.Archivo;
 
-public class ArchivoCMasMas extends Archivo<LineaCMasMas> {
+public class ArchivoGNUSmalltalk extends Archivo<LineaGNUSmalltalk> {
 
-	private final List<LineaCMasMas> lineasArchivo = new ArrayList<>();
+	private final List<LineaGNUSmalltalk> lineasArchivo = new ArrayList<>();
 
 	@Override
-	public LineaCMasMas getLinea(int numeroLinea) {
+	public LineaGNUSmalltalk getLinea(int numeroLinea) {
 		return lineasArchivo.get(numeroLinea - 1);
 	}
 
 	@Override
 	public void addLinea(String codigoLinea) {
-		LineaCMasMas nuevaLinea = new LineaCMasMas();
+		LineaGNUSmalltalk nuevaLinea = new LineaGNUSmalltalk();
 		nuevaLinea.setNumeroLinea(lineasArchivo.size() + 1);
 		nuevaLinea.setCodigoLinea(codigoLinea);
 		lineasArchivo.add(nuevaLinea);
 	}
 
 	@Override
-	public void putLinea(LineaCMasMas nuevaLinea) {
+	public void putLinea(LineaGNUSmalltalk nuevaLinea) {
 		lineasArchivo.set(nuevaLinea.getNumeroLinea() - 1, nuevaLinea);
 	}
 
@@ -33,7 +33,7 @@ public class ArchivoCMasMas extends Archivo<LineaCMasMas> {
 	}
 
 	@Override
-	public List<LineaCMasMas> getLineas() {
-		return new ArrayList<>(this.lineasArchivo);
+	public List<LineaGNUSmalltalk> getLineas() {
+		return this.lineasArchivo;
 	}
 }

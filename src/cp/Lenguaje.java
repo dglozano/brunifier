@@ -12,16 +12,16 @@ public abstract class Lenguaje {
 	public List<ComponenteDeProcesamiento> getProceso() {
 		return null;
 	}
-	
+
 	public String getNombreFiltro() {
 		return "Archivo ";
 	}
-	
+
 	public ArrayList<String> getTiposFiltro() {
 		return new ArrayList<>();
 	}
-	
-	public Archivo createArchivo() {
+
+	public Archivo<?> createArchivo() {
 		return null;
 	}
 

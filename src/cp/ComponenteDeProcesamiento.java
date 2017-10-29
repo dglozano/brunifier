@@ -6,6 +6,6 @@ public abstract class ComponenteDeProcesamiento {
 		super();
 	}
 
-	public abstract Archivo ejecutar(Archivo archivo);
+	public abstract Archivo<?> ejecutar(Archivo<?> archivo);
 
 }

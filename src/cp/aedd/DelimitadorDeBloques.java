@@ -9,35 +9,35 @@ import cp.ComponenteDeProcesamiento;
 public class DelimitadorDeBloques extends ComponenteDeProcesamiento {
 
 	@Override
-	public Archivo ejecutar(Archivo archivo) {
+	public Archivo<?> ejecutar(Archivo<?> archivo) {
 		ArchivoCMasMas archivoTransformado = (ArchivoCMasMas) archivo;
 		//ArrayList es más eficiente para quitar al final, es decir, como pila
 		List<LineaCMasMas> pilaDeBloquesAbiertos = new ArrayList<>();
 		List<LineaCMasMas> pilaDeIf = new ArrayList<>();
 		List<LineaCMasMas> pilaDeSwitch = new ArrayList<>();
-		archivoTransformado.getLineasCMasMas().forEach(lineaOriginal -> {
-			if(lineaOriginal.abreBloque()) {
+		archivoTransformado.getLineas().forEach(lineaOriginal -> {
+			if(lineaOriginal.abreBloque()){
 				int numLinea = lineaOriginal.getNumeroLinea();
 				LineaCMasMas lineaEnPila = new LineaCMasMas("", lineaOriginal.getCodigoLineaSinFinal(), numLinea);
-				if(lineaOriginal.esIf()) {
+				if(lineaOriginal.esIf()){
 					pilaDeIf.add(lineaEnPila);
 				}
-				else if(lineaOriginal.esSwitch()) {
+				else if(lineaOriginal.esSwitch()){
 					pilaDeSwitch.add(lineaEnPila);
 				}
-				if(lineaOriginal.tieneElse()) {
+				if(lineaOriginal.tieneElse()){
 					String aux = "EN LINEA " + numLinea + " DE " + pilaDeIf.remove(pilaDeIf.size() - 1).getMarcaConNumero();
-					lineaEnPila.addMarca(aux) ;
+					lineaEnPila.addMarca(aux);
 					lineaEnPila.setNumeroLineaYaMostrado(true);
 				}
-				else {
-					if(lineaOriginal.esCase() || lineaOriginal.esDefault()) {
+				else{
+					if(lineaOriginal.esCase() || lineaOriginal.esDefault()){
 						String aux = "EN LINEA " + numLinea + " DE " + pilaDeSwitch.get(pilaDeSwitch.size() - 1).getMarcaConNumero();
-						lineaEnPila.addMarca(aux) ;
+						lineaEnPila.addMarca(aux);
 						lineaEnPila.setNumeroLineaYaMostrado(true);
 					}
 				}
-				if(!lineaOriginal.esDo()) {
+				if(!lineaOriginal.esDo()){
 					pilaDeBloquesAbiertos.add(lineaEnPila);
 				}
 			}
@@ -57,6 +57,6 @@ public class DelimitadorDeBloques extends ComponenteDeProcesamiento {
 				}
 			}
 		});
-		return archivoTransformado;
+		return archivo;
 	}
 }
