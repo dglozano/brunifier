@@ -13,3 +13,7 @@ Chequear que se tiene JFX. Si no, hacer 'sudo apt-get install openjfx'
 ## Smalltalk
 
 - Añade marcas que indican el comienzo y fin de clases y métodos.
+
+## Scheme
+
+- Añade marcas que indican el fin de abstracciones y aplicaciones funcionales.
