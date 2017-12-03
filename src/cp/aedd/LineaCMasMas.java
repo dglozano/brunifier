@@ -9,7 +9,7 @@ public class LineaCMasMas extends Linea {
 
 	@Override
 	public String toString() {
-		return (!this.marca.isEmpty()) ? this.getCodigoLinea() + " // " + this.marca : this.getCodigoLinea();
+		return this.getCodigoLinea() + ((!this.marca.isEmpty()) ? " // " + this.marca : "");
 	}
 
 	public LineaCMasMas() {
