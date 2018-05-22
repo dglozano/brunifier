@@ -6,6 +6,19 @@ import java.util.List;
 import cp.Archivo;
 import cp.ComponenteDeProcesamiento;
 
+/**
+ *
+ * Este ComponenteDeProcesamiento se encarga de agregar un comentario al INICIO de la definicion de una
+ * funcion indicando entre que lineas esta definida la misma. El comentario al CIERRE de la funcion es añadido
+ * por el CP DelimitadorDeBloques.
+ *
+ * Por ejemplo:
+ * 11	void funcion() { // FUNCION DEFINIDA ENTRE LAS LINEAS 11 Y 14
+ * 12		for(int i=0;i<5;i++)
+ * 13			cout << "Hola" << endl;
+ * 14	} // CIERRA EL BLOQUE DE void funcion() EN LINEA 11
+ *
+ */
 public class DelimitadorDeFunciones extends ComponenteDeProcesamiento {
 
 	private boolean apilar = false;
@@ -34,11 +47,13 @@ public class DelimitadorDeFunciones extends ComponenteDeProcesamiento {
 			}
 			else{
 				if(apilar && lineaOriginal.cierraBloque()){
+					//Si estoy apilando los bloques de una funcion y cierra un bloque, desapilo uno...
 					LineaCMasMas topePila = pilaDeBloquesAbiertos.remove(pilaDeBloquesAbiertos.size() - 1);
 					if(pilaDeBloquesAbiertos.isEmpty()){
 						/*
-						 * Si la pila queda vacia, es porque la linea removida corresponde a la cabecera de funcion
-						 * Entonces, reemplazo esa linea del archivo por la misma mas la marca y dejo de apilar
+						 * ... y si la pila queda vacia, es porque la linea desapilada corresponde a la cabecera de funcion
+						 * Entonces, reemplazo esa linea del archivo por si misma, mas la marca, y dejo de apilar porque
+						 * termino la definicion de la funcion
 						 */
 						topePila.addMarca("FUNCION DEFINIDA ENTRE LAS LINEAS");
 						topePila.addMarca(topePila.getNumeroLinea() + " Y " + numLinea);
