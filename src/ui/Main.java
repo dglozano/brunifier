@@ -64,11 +64,12 @@ public class Main extends Application {
 		cbLenguajes.setMaxWidth(Double.MAX_VALUE);
 		panel.getChildren().add(cbLenguajes);
 
-		//Crear panel botones y botones
+		//Crear panel botones
 		HBox panelBotones = new HBox();
 		panelBotones.setAlignment(Pos.BOTTOM_RIGHT);
 		panel.getChildren().add(panelBotones);
 
+		//Crear boton aceptar
 		Button aceptar = new Button("Aceptar");
 		aceptar.setOnAction(t -> {
 			Lenguaje lenguaje = cbLenguajes.getValue();
@@ -76,6 +77,7 @@ public class Main extends Application {
 		});
 		panelBotones.getChildren().add(aceptar);
 
+		//Crear boton cancelar
 		Button cancelar = new Button("Cancelar");
 		cancelar.setOnAction(t -> {
 			Platform.exit();
@@ -89,15 +91,22 @@ public class Main extends Application {
 
 	private void procesar(Lenguaje lenguaje) {
 		try{
+			//Un Procesamiento consiste en una cadena de ComponenteDeProcesamiento aplicadas al lenguaje
 			Procesamiento procesamiento = new Procesamiento(lenguaje);
+			//Muestra el file chooser para seleccionar el o los archivos a procesar
 			List<File> archivos = getFileChooser(lenguaje).showOpenMultipleDialog(primaryStage);
 			if(archivos != null){
+				//Procesa en paralelo cada archivo seleccionado
 				archivos.parallelStream().forEach(fileIn -> {
+					//Crea el archivo de salida con el nombre compuesto por el nombre y extension original,
+					//pero añadiendo "ConMarcas" al final del mismo.
 					String[] nombreExtension = this.stripExtension(fileIn.getName());
 					File fileOut = new File(fileIn.getParentFile(), nombreExtension[0] + "ConMarcas" + nombreExtension[1]);
 					if(fileOut.exists()){
+						//Si ya existe un archivo de salida con ese nombre lo borra
 						fileOut.delete();
 					}
+					//Ejecuta en un nuevo hilo el procesamiento del archivo
 					new Thread(() -> procesamiento.run(fileIn, fileOut)).start();
 				});
 			}
@@ -108,6 +117,7 @@ public class Main extends Application {
 		}
 	}
 
+	// Devuelve un array con dos strings: el nombre del archivo hasta el "." y el nombre de la extension
 	private String[] stripExtension(String str) {
 
 		// Handle null case specially.
@@ -127,6 +137,7 @@ public class Main extends Application {
 		return new String[] { str.substring(0, pos), str.substring(pos) };
 	}
 
+	// Retorna un FileChooser con los filtros especificos para un Lenguaje dado (por ejemplo C++ --> .cpp)
 	private FileChooser getFileChooser(Lenguaje lenguaje) {
 		ExtensionFilter filtro = new ExtensionFilter(lenguaje.getNombreFiltro(), lenguaje.getTiposFiltro());
 
@@ -136,6 +147,7 @@ public class Main extends Application {
 		return archivoSeleccionado;
 	}
 
+	// Muestra un alert con un mensaje de error
 	private void mostrarError(String errorMsg) {
 		Alert error = new Alert(AlertType.ERROR);
 		try{
