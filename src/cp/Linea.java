@@ -1,5 +1,9 @@
 package cp;
 
+/**
+ * Representa una Linea de un Archivo de un Lenguaje determinado.
+ * Compuesta por un String con el código en esa linea y el numero de la linea.
+ */
 public abstract class Linea {
 
 	private int numeroLinea;
