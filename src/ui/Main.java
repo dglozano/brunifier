@@ -8,6 +8,7 @@ import cp.Lenguaje;
 import cp.Procesamiento;
 import cp.aedd.CMasMasProcedural;
 import cp.exception.UnsupportedLanguageException;
+import cp.pdp.lisp.Scheme;
 import cp.pdp.st.GNUSmalltalk;
 import cp.pdp.st.PharoToGNUSmalltalk;
 import javafx.application.Application;
@@ -154,6 +155,7 @@ public class Main extends Application {
 		lenguajesSoportados.add(new CMasMasProcedural());
 		lenguajesSoportados.add(new GNUSmalltalk());
 		lenguajesSoportados.add(new PharoToGNUSmalltalk());
+		lenguajesSoportados.add(new Scheme());
 		return lenguajesSoportados;
 	}
 }
