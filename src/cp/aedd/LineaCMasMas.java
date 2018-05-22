@@ -34,14 +34,17 @@ public class LineaCMasMas extends Linea {
 		this.marca = marca;
 	}
 
+	// Una Linea de C++ abre un bloque si tiene una llave abriendo al final
 	public boolean abreBloque() {
 		return this.getCodigoLinea().charAt(getCodigoLinea().length() - 1) == '{';
 	}
 
+	// Una Linea de C++ cierra un bloque si tiene una llave cerrando al final
 	public boolean cierraBloque() {
 		return this.getCodigoLinea().charAt(getCodigoLinea().length() - 1) == '}';
 	}
 
+	// Devuelve el string de la linea sin el ; final. Si es un case/default de un switch, le quita el :
 	public String getCodigoLineaSinFinal() {
 		String aux = this.getCodigoLinea().substring(0, this.getCodigoLinea().length() - 2);
 		if(aux.endsWith(":")){
@@ -66,6 +69,7 @@ public class LineaCMasMas extends Linea {
 		return this.getCodigoLinea().contains("else");
 	}
 
+	//Este flag sirve para no mostrar varias veces el numero de linea en los comentarios de las estructuras anidadas
 	public void setNumeroLineaYaMostrado(boolean flag) {
 		this.numeroLineaYaMostrado = flag;
 	}
@@ -99,6 +103,7 @@ public class LineaCMasMas extends Linea {
 		return numeroLineaYaMostrado ? this.getMarca() : this.getMarca() + " EN LINEA " + this.getNumeroLinea();
 	}
 
+	//Determina si una linea es la cabecera de una funcion.
 	public boolean esCabeceraDeFuncion() {
 		boolean esCabecera = false;
 		String l = this.getCodigoLinea();
