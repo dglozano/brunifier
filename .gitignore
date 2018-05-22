@@ -31,3 +31,8 @@ bin/
 *.exe
 *.out
 *.app
+
+# Idea
+.idea/
+.idea/*
+HerramientaAccesibilidad.iml
