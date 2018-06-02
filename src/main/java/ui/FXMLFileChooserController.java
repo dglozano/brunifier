@@ -13,10 +13,13 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxListCell;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import main.java.Main;
 import main.java.cp.aedd.CMasMasProcedural;
 import main.java.cp.exception.UnsupportedLanguageException;
 import main.java.cp.model.Archivo;
@@ -191,8 +194,68 @@ public class FXMLFileChooserController implements Initializable {
         }
         error.setContentText(errorMsg);
         error.setHeaderText(null);
-        error.setTitle("ERROR: " + errorMsg);
+        error.setTitle("ERROR");
         error.showAndWait();
+    }
+
+    private void mostrarAyuda() {
+        Alert error = new Alert(Alert.AlertType.INFORMATION);
+        try{
+            error.initOwner(primaryStage);
+        } catch(NullPointerException exc){
+            exc.printStackTrace();
+        }
+
+        StringBuilder str = new StringBuilder();
+        str.append("CTRL + C: Selecciona lenguaje C++ \n");
+        str.append("CTRL + G: Selecciona lenguaje GNU Smalltalk\n");
+        str.append("CTRL + P: Selecciona lenguaje Pharo \n");
+        str.append("CTRL + S: Selecciona lenguaje Scheme \n");
+        str.append("F1: Seleccionar archivos \n");
+        str.append("F2: Seleccionar carpeta destino \n");
+        str.append("F3: Procesar \n");
+        str.append("F8: Mostrar ayuda \n");
+        str.append("ESC: Salir");
+
+        error.setContentText(str.toString());
+        error.setHeaderText(null);
+        error.setTitle("INFORMACION");
+        error.showAndWait();
+    }
+
+    public void setStageAndInitializeKeyCombinations(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+
+        setKeyCombinationForLanguage(KeyCode.C, 0); // C++ index 0
+        setKeyCombinationForLanguage(KeyCode.G, 1); // GNU Smalltalk index 1
+        setKeyCombinationForLanguage(KeyCode.P, 2); // Pharo index 2
+        setKeyCombinationForLanguage(KeyCode.S, 3); // Scheme index 3
+
+        primaryStage.getScene().addEventHandler(KeyEvent.KEY_RELEASED, (KeyEvent event) -> {
+            if (KeyCode.F1 == event.getCode()) {
+                seleccionarArchivos();
+            }
+            else if(KeyCode.F2 == event.getCode()){
+                seleccionarDestino();
+            }
+            else if(KeyCode.F3 == event.getCode()){
+                aceptar();
+            }
+            else if(KeyCode.F8 == event.getCode()){
+                mostrarAyuda();
+            }
+        });
+    }
+
+    private void setKeyCombinationForLanguage(KeyCode keycode, int i){
+        this.primaryStage.getScene().getAccelerators().put(
+                new KeyCodeCombination(keycode, KeyCombination.CONTROL_ANY),
+                new Runnable() {
+                    @FXML public void run() {
+                        cbLenguajes.getSelectionModel().select(i);
+                    }
+                }
+        );
     }
 
     @Override
@@ -211,4 +274,6 @@ public class FXMLFileChooserController implements Initializable {
         lenguajesSoportados.add(new Scheme());
         return lenguajesSoportados;
     }
+
+
 }

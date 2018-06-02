@@ -5,9 +5,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import main.java.cp.exception.UnsupportedLanguageException;
@@ -25,10 +27,11 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
+import main.java.ui.FXMLFileChooserController;
 
 public class Main extends Application {
 
-	private Stage primaryStage;
+	public Stage primaryStage;
 
 	public static void main(String[] args) {
 		launch(args);
@@ -45,7 +48,7 @@ public class Main extends Application {
 
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/main/resources/FXMLFileChooser.fxml"));
-        Parent fileChooserView= loader.load();
+        Parent fileChooserView = loader.load();
 
         Scene initScene = new Scene(fileChooserView);
 
@@ -59,6 +62,9 @@ public class Main extends Application {
         });
 
 		primaryStage.setScene(initScene);
+
+        FXMLFileChooserController controller = (FXMLFileChooserController)loader.getController();
+        controller.setStageAndInitializeKeyCombinations(primaryStage);
 	}
 
 
