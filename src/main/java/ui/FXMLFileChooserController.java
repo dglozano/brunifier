@@ -12,6 +12,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxListCell;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -48,28 +50,49 @@ public class FXMLFileChooserController implements Initializable {
     }
 
     @FXML
+    private void salirEnter(KeyEvent event){
+        if(KeyCode.ENTER == event.getCode()){
+            Platform.exit();
+        }
+    }
+
+    @FXML
     private void aceptar(ActionEvent event){
-        Lenguaje lenguaje = cbLenguajes.getValue();
-        List<File> archivos = archivosListView.getItems();
-        if(archivos !=null && !archivos.isEmpty() && directorioSalida != null){
-            procesar(lenguaje, archivos, directorioSalida);
-        } else {
-            mostrarError("Debe seleccionar al menos un archivo para procesar y un directorio destino.");
+        aceptar();
+    }
+
+    @FXML
+    private void aceptarEnter(KeyEvent event){
+        if (KeyCode.ENTER == event.getCode()) {
+            aceptar();
         }
     }
 
     @FXML
     private void seleccionarDestino(ActionEvent event){
-        DirectoryChooser directoryChooser = new DirectoryChooser();
-        File selectedDirectory = directoryChooser.showDialog(primaryStage);
-        if(selectedDirectory != null){
-            directorioSalida = selectedDirectory;
-            directorioSalidaInput.setText(selectedDirectory.toString());
+        seleccionarDestino();
+    }
+
+    @FXML
+    private void seleccionarDestinoEnter(KeyEvent event){
+        if (KeyCode.ENTER == event.getCode()) {
+            seleccionarDestino();
         }
     }
 
     @FXML
     private void seleccionarArchivos(ActionEvent event) {
+        seleccionarArchivos();
+    }
+
+    @FXML
+    private void seleccionarArchivosEnter(KeyEvent event){
+        if (KeyCode.ENTER == event.getCode()) {
+            seleccionarArchivos();
+        }
+    }
+
+    private void seleccionarArchivos() {
         //Obtiene lenguaje de los archivos a seleccionar
         Lenguaje lenguaje = cbLenguajes.getValue();
         //Muestra el file chooser para seleccionar el o los archivos a procesar
@@ -79,6 +102,25 @@ public class FXMLFileChooserController implements Initializable {
             ObservableList<File> data = FXCollections.observableArrayList();
             data.addAll(archivos);
             archivosListView.setItems(data);
+        }
+    }
+
+    private void seleccionarDestino(){
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        File selectedDirectory = directoryChooser.showDialog(primaryStage);
+        if(selectedDirectory != null){
+            directorioSalida = selectedDirectory;
+            directorioSalidaInput.setText(selectedDirectory.toString());
+        }
+    }
+
+    private void aceptar(){
+        Lenguaje lenguaje = cbLenguajes.getValue();
+        List<File> archivos = archivosListView.getItems();
+        if(archivos !=null && !archivos.isEmpty() && directorioSalida != null){
+            procesar(lenguaje, archivos, directorioSalida);
+        } else {
+            mostrarError("Debe seleccionar al menos un archivo para procesar y un directorio destino.");
         }
     }
 

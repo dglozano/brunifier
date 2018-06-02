@@ -43,7 +43,7 @@
             </top>
             <center>
                 <VBox>
-                    <Button mnemonicParsing="false" onAction="#seleccionarArchivos" styleClass="button-seleccionar" text="SELECCIONAR ARCHIVOS">
+                    <Button mnemonicParsing="false" onAction="#seleccionarArchivos" onKeyPressed="#seleccionarArchivosEnter" styleClass="button-seleccionar" text="SELECCIONAR ARCHIVOS">
                         <VBox.margin>
                             <Insets />
                         </VBox.margin></Button>
@@ -57,7 +57,7 @@
                 <HBox spacing="20">
                     <children>
                         <TextField fx:id="directorioSalidaInput" editable="false" styleClass="input-text, disabled" text="No ha seleccionado una carpeta destino" HBox.hgrow="ALWAYS" />
-                        <Button mnemonicParsing="false" onAction="#seleccionarDestino" styleClass="button-seleccionar" text="SELECCIONAR DESTINO" HBox.hgrow="ALWAYS" />
+                        <Button mnemonicParsing="false" onAction="#seleccionarDestino" onKeyPressed="#seleccionarDestinoEnter" styleClass="button-seleccionar" text="SELECCIONAR DESTINO" HBox.hgrow="ALWAYS" />
                     </children>
                 </HBox>
             </bottom>
@@ -68,8 +68,8 @@
             <right>
                 <HBox>
                     <children>
-                        <Button mnemonicParsing="false" onAction="#salir" text="SALIR" />
-                        <Button mnemonicParsing="false" onAction="#aceptar" text="ACEPTAR" />
+                        <Button mnemonicParsing="false" onAction="#salir" onKeyPressed="#salirEnter" text="SALIR" />
+                        <Button mnemonicParsing="false" onAction="#aceptar" onKeyPressed="#aceptarEnter" text="ACEPTAR" />
                     </children>
                 </HBox>
             </right>
