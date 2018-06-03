@@ -8,12 +8,14 @@ import java.util.List;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.text.Font;
 import main.java.cp.exception.UnsupportedLanguageException;
 import main.java.cp.model.Lenguaje;
 import main.java.cp.model.Procesamiento;
@@ -48,7 +50,7 @@ public class Main extends Application {
 	}
 
 	private void mostrarPantallaInicial() throws IOException {
-
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/main/resources/img/braille.png")));
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/main/resources/FXMLFileChooser.fxml"));
         Parent fileChooserView = loader.load();
@@ -56,7 +58,7 @@ public class Main extends Application {
         Scene initScene = new Scene(fileChooserView);
 
         primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-        primaryStage.setTitle("Herramienta de Marcado de Codigo");
+        primaryStage.setTitle("Brunifier");
         primaryStage.setScene(initScene);
         primaryStage.setResizable(false);
         primaryStage.addEventHandler(KeyEvent.KEY_RELEASED, (KeyEvent event) -> {

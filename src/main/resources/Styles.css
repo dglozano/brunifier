@@ -1,9 +1,10 @@
 @font-face {
-    src: url('fonts/RobotoMono-Bold.ttf');
+    font-family: Montserrat;
+    src: url('/main/resources/fonts/Montserrat-Black.ttf');
 }
 
 .root{
-    -fx-font-family: 'RobotoMono-Bold';
+    -fx-font-family: 'Montserrat';
 }
 
 .header-section {
@@ -15,9 +16,10 @@
 
 .header-text {
     -fx-font-weight: bold;
-    -fx-fill: #ffffff;
+    -fx-fill: #D0DAE8;
     -fx-font-size: 30px;
     -fx-background-color: #1D3247;
+    -fx-effect: innershadow(three-pass-box, #1D3247, 1, 0, 0, 0);
 }
 
 .utn-logo {
