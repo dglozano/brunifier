@@ -2,7 +2,7 @@
 ### UTN - FRSF
 Adaptación de herramientas de programación para personas no videntes. Estructurada de formal tal que permite ser facilmente extensible a otros lenguajes.
 
-[Screenshot de la aplicacion](examples/screenshots/Brunifier.png)
+![Screenshot de la aplicacion](examples/screenshots/Brunifier.png)
 
 ### En Ubuntu
 
