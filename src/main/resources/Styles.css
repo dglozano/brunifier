@@ -35,20 +35,23 @@
 Button {
     -fx-background-color: #1D3247;
     -fx-text-fill: #fff;
-    -fx-border-radius: 0;
     -fx-pref-width: 130px;
     -fx-pref-height: 40px;
     -fx-tab-color: #2D639A;
-    -fx-border-width: 1;
     -fx-focus-color: #2D639A;
     -fx-faint-focus-color: #2D639A;
     -fx-cursor: hand;
     -fx-font-size: 16px;
+    -fx-border-width: 2;
+    -fx-border-radius: 5;
+    -fx-border-color: #1D3247;
+    -fx-background-insets: 2px;
 }
 
 Button:hover,
 Button:focused{
     -fx-background-color: #2D639A;
+    -fx-border-color: #2D639A;
 }
 
 .button-seleccionar {
@@ -105,4 +108,21 @@ Button:focused{
 
 .disabled{
     -fx-text-fill: #999;
+}
+
+.inverted-button{
+    -fx-background-color: #fff;
+    -fx-text-fill: #1D3247;
+    -fx-border-color: #1D3247;
+    -fx-pref-width: 130px;
+    -fx-pref-height: 40px;
+    -fx-cursor: hand;
+    -fx-font-size: 16px;
+}
+
+.inverted-button:hover,
+.inverted-button:focused{
+    -fx-background-color: #1D3247;
+    -fx-text-fill: #fff;
+    -fx-border-color: #1D3247;
 }
