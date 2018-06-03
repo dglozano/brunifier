@@ -1,0 +1,108 @@
+@font-face {
+    src: url('fonts/RobotoMono-Bold.ttf');
+}
+
+.root{
+    -fx-font-family: 'RobotoMono-Bold';
+}
+
+.header-section {
+    -fx-padding: 20px;
+    -fx-font-size: 26px;
+    -fx-background-color: #1D3247;
+    -fx-effect: dropshadow(three-pass-box, #afafaf, 60, 0, 0, 0);
+}
+
+.header-text-top {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 14px;
+    -fx-background-color: #1D3247;
+
+}
+
+.header-text-bottom {
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 24px;
+    -fx-background-color: #1D3247;
+
+}
+
+.utn-logo {
+    -fx-padding: 10px;
+}
+
+Button {
+    -fx-background-color: #1D3247;
+    -fx-text-fill: #fff;
+    -fx-border-radius: 0;
+    -fx-pref-width: 130px;
+    -fx-pref-height: 40px;
+    -fx-tab-color: #2D639A;
+    -fx-border-width: 1;
+    -fx-focus-color: #2D639A;
+    -fx-faint-focus-color: #2D639A;
+    -fx-cursor: hand;
+    -fx-font-size: 16px;
+}
+
+Button:hover,
+Button:focused{
+    -fx-background-color: #2D639A;
+}
+
+.button-seleccionar {
+    -fx-pref-height: 30px;
+    -fx-pref-width: 220px;
+    -fx-font-size: 14px;
+    -fx-font-weight: normal;
+}
+
+.bottom {
+    -fx-padding: 20px;
+}
+
+.bottom HBox{
+    -fx-spacing: 10px;
+}
+
+.combo-box-base {
+    -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, white;
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-background-radius: 3px, 3px, 2px, 1px;
+    -fx-pref-height: 30;
+}
+
+.combo-box-base:focused {
+    -fx-border-color: #2D639A;
+    -fx-effect: dropshadow(three-pass-box, #ababab, 20, 0, 0, 0);
+}
+
+.list-view:focused{
+    -fx-border-color: #2D639A;
+}
+
+.container {
+    -fx-padding: 30px;
+}
+
+.container-text{
+    -fx-font-size: 18px;
+    -fx-pref-height: 30px;
+    -fx-text-fill: #1D3247;
+    -fx-font-weight: bold;
+}
+
+.input-text {
+    -fx-font-size: 16px;
+    -fx-pref-height: 30px;
+    -fx-text-fill: #1D3247;
+}
+
+.input-text:focused{
+    -fx-border-color: #2D639A;
+}
+
+.disabled{
+    -fx-text-fill: #999;
+}

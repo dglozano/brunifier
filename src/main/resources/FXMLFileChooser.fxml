@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.ui.FXMLFileChooserController">
+    <top>
+        <BorderPane styleClass="header-section">
+            <left>
+                <VBox>
+                    <Label styleClass="header-text-top" text="HERRAMIENTA DE" />
+                    <Label styleClass="header-text-bottom" text="MARCADO DE CODIGO" />
+                </VBox>
+            </left>
+            <right>
+                <ImageView fitHeight="35" pickOnBounds="true" preserveRatio="true" styleClass="utn-logo" BorderPane.alignment="CENTER">
+                    <image>
+                        <Image url="@img/utn-logo.png" />
+                    </image>
+                </ImageView>
+            </right>
+        </BorderPane>
+    </top>
+    <center>
+        <BorderPane styleClass="container">
+            <top>
+                <HBox spacing="20">
+                    <children>
+                        <Label styleClass="container-text" text="LENGUAJE" BorderPane.alignment="CENTER" />
+                        <ComboBox fx:id="cbLenguajes" prefWidth="250.0" styleClass="combo-box-base" />
+                    </children>
+                </HBox>
+            </top>
+            <center>
+                <VBox>
+                    <Button mnemonicParsing="false" onAction="#seleccionarArchivos" onKeyPressed="#seleccionarArchivosEnter" styleClass="button-seleccionar" text="SELECCIONAR ARCHIVOS">
+                        <VBox.margin>
+                            <Insets />
+                        </VBox.margin></Button>
+                    <ListView fx:id="archivosListView" />
+                    <BorderPane.margin>
+                        <Insets bottom="20.0" top="20.0" />
+                    </BorderPane.margin>
+                </VBox>
+            </center>
+            <bottom>
+                <HBox spacing="20">
+                    <children>
+                        <TextField fx:id="directorioSalidaInput" editable="false" styleClass="input-text, disabled" text="No ha seleccionado una carpeta destino" HBox.hgrow="ALWAYS" />
+                        <Button mnemonicParsing="false" onAction="#seleccionarDestino" onKeyPressed="#seleccionarDestinoEnter" styleClass="button-seleccionar" text="SELECCIONAR DESTINO" HBox.hgrow="ALWAYS" />
+                    </children>
+                </HBox>
+            </bottom>
+        </BorderPane>
+    </center>
+    <bottom>
+        <BorderPane styleClass="bottom">
+            <left>
+                <Button mnemonicParsing="false" onAction="#mostrarAyuda" onKeyPressed="#mostrarAyudaEnter" text="AYUDA" />
+            </left>
+            <right>
+                <HBox>
+                    <children>
+                        <Button mnemonicParsing="false" onAction="#salir" onKeyPressed="#salirEnter" text="SALIR" />
+                        <Button mnemonicParsing="false" onAction="#aceptar" onKeyPressed="#aceptarEnter" text="ACEPTAR" />
+                    </children>
+                </HBox>
+            </right>
+        </BorderPane>
+    </bottom>
+    <stylesheets>
+        <URL value="@Styles.css" />
+    </stylesheets>
+</BorderPane>
