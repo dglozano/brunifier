@@ -65,6 +65,9 @@
     </center>
     <bottom>
         <BorderPane styleClass="bottom">
+            <left>
+                <Button mnemonicParsing="false" onAction="#mostrarAyuda" onKeyPressed="#mostrarAyudaEnter" text="AYUDA" />
+            </left>
             <right>
                 <HBox>
                     <children>

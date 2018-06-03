@@ -12,6 +12,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import main.java.cp.exception.UnsupportedLanguageException;
 import main.java.cp.model.Lenguaje;
 import main.java.cp.model.Procesamiento;
@@ -28,6 +30,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import main.java.ui.FXMLFileChooserController;
+import main.java.util.SoundPlayer;
 
 public class Main extends Application {
 
@@ -57,15 +60,15 @@ public class Main extends Application {
         primaryStage.setScene(initScene);
         primaryStage.addEventHandler(KeyEvent.KEY_RELEASED, (KeyEvent event) -> {
             if (KeyCode.ESCAPE == event.getCode()) {
-                primaryStage.close();
+                Platform.exit();
             }
         });
 
 		primaryStage.setScene(initScene);
 
+		SoundPlayer.playBeep();
+
         FXMLFileChooserController controller = (FXMLFileChooserController)loader.getController();
         controller.setStageAndInitializeKeyCombinations(primaryStage);
 	}
-
-
 }
