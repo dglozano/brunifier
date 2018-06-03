@@ -58,6 +58,7 @@ public class Main extends Application {
         primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         primaryStage.setTitle("Herramienta de Marcado de Codigo");
         primaryStage.setScene(initScene);
+        primaryStage.setResizable(false);
         primaryStage.addEventHandler(KeyEvent.KEY_RELEASED, (KeyEvent event) -> {
             if (KeyCode.ESCAPE == event.getCode()) {
                 Platform.exit();

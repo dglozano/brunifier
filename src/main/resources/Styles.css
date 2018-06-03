@@ -10,22 +10,14 @@
     -fx-padding: 20px;
     -fx-font-size: 26px;
     -fx-background-color: #1D3247;
-    -fx-effect: dropshadow(three-pass-box, #afafaf, 60, 0, 0, 0);
+    -fx-effect: dropshadow(three-pass-box, #1D3247, 20, 0, 0, 0);
 }
 
-.header-text-top {
-    -fx-text-fill: #ffffff;
-    -fx-font-size: 14px;
-    -fx-background-color: #1D3247;
-
-}
-
-.header-text-bottom {
+.header-text {
     -fx-font-weight: bold;
-    -fx-text-fill: #ffffff;
-    -fx-font-size: 24px;
+    -fx-fill: #ffffff;
+    -fx-font-size: 30px;
     -fx-background-color: #1D3247;
-
 }
 
 .utn-logo {
@@ -71,9 +63,12 @@ Button:focused{
 
 .combo-box-base {
     -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, white;
-    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-background-insets: 2;
     -fx-background-radius: 3px, 3px, 2px, 1px;
     -fx-pref-height: 30;
+    -fx-border-width: 2;
+    -fx-border-radius: 5;
+    -fx-border-color: #afafaf;
 }
 
 .combo-box-base:focused {

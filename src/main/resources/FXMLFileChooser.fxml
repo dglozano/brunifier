@@ -13,17 +13,15 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.text.Text?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.ui.FXMLFileChooserController">
     <top>
         <BorderPane styleClass="header-section">
             <left>
-                <VBox>
-                    <Label styleClass="header-text-top" text="HERRAMIENTA DE" />
-                    <Label styleClass="header-text-bottom" text="MARCADO DE CODIGO" />
-                </VBox>
+                <Text styleClass="header-text" text="BRUNIFIER" BorderPane.alignment="CENTER"/>
             </left>
             <right>
-                <ImageView fitHeight="35" pickOnBounds="true" preserveRatio="true" styleClass="utn-logo" BorderPane.alignment="CENTER">
+                <ImageView fitHeight="33" pickOnBounds="true" preserveRatio="true" styleClass="utn-logo" BorderPane.alignment="CENTER">
                     <image>
                         <Image url="@img/utn-logo.png" />
                     </image>
