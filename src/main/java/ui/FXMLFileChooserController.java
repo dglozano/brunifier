@@ -153,7 +153,7 @@ public class FXMLFileChooserController implements Initializable {
 		try{
 			//Un Procesamiento consiste en una cadena de ComponenteDeProcesamiento aplicadas al lenguaje
 			Procesamiento procesamiento = new Procesamiento(lenguaje);
-			ExecutorService executorService = Executors.newCachedThreadPool();
+			ExecutorService executorService = Executors.newSingleThreadExecutor();
 			if(archivos != null){
 				//Procesa en paralelo cada archivo seleccionado
 				archivos.parallelStream().forEach(fileIn -> {
