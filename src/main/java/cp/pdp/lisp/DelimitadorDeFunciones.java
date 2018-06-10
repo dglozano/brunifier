@@ -19,9 +19,9 @@ public class DelimitadorDeFunciones extends ComponenteDeProcesamiento {
 		String cierreStr = Scheme.Marca.cierreBloque.toString();
 		String ifStr = Scheme.Marca.iF.toString();
 		List<String> pilaIFOriginal = Arrays.asList(
-				" CAMINO POR FALSO DE " + ifStr,
-				" CAMINO POR VERDADERO DE " + ifStr,
-				" CONDICION DE " + ifStr);
+				"CAMINO POR FALSO DE " + ifStr,
+				"CAMINO POR VERDADERO DE " + ifStr,
+				"CONDICION DE " + ifStr);
 		List<String> pilaIF = new ArrayList<>();
 
 		archivoTransformado.getLineas().forEach(lineaOriginal -> {
@@ -39,6 +39,9 @@ public class DelimitadorDeFunciones extends ComponenteDeProcesamiento {
 						else if(nombreFuncion.contains(ifStr)){
 							pilaIF.addAll(pilaIFOriginal);
 						}
+						else if(nombreFuncion.contains(cierreStr)){
+							nombreFuncion = nombreFuncion.substring(0, nombreFuncion.indexOf(cierreStr));
+						}
 						indice += nombreFuncion.length();
 						pilaDeFuncionesAbiertas.add(nombreFuncion);
 					}
@@ -49,8 +52,14 @@ public class DelimitadorDeFunciones extends ComponenteDeProcesamiento {
 						indice = indiceCierre + cierreStr.length();
 
 						String funcionTopePila = pilaDeFuncionesAbiertas.remove(pilaDeFuncionesAbiertas.size() - 1);
+						if(funcionTopePila.isEmpty()){
+							funcionTopePila = "Funcion de orden superior";
+						}
 						if(!pilaDeFuncionesAbiertas.isEmpty()){
 							String funcionContenedora = pilaDeFuncionesAbiertas.get(pilaDeFuncionesAbiertas.size() - 1);
+							if(funcionContenedora.isEmpty()){
+								funcionContenedora = "Funcion de orden superior";
+							}
 							if(funcionContenedora.equals(ifStr)){
 								String finalStr = pilaIF.remove(pilaIF.size() - 1);
 								lineaOriginal.setMarca("CIERRA " + funcionTopePila + " EN " + finalStr);
