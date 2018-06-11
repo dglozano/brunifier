@@ -26,4 +26,4 @@ Chequear que se tiene JFX. Si no, hacer 'sudo apt-get install openjfx'
 - Añade marcas que indican el fin de abstracciones y aplicaciones funcionales.
 
 ## Pharo
-- <Completar>
+- Convierte del fileout de pharo a smalltalk
