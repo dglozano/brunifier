@@ -10,7 +10,7 @@ import main.java.cp.model.Lenguaje;
 public class Scheme extends Lenguaje {
 
 	enum Marca {
-		aperturaBloque("("), cierreBloque(")"), quote("'"), iF("if"), comentario(";");
+		aperturaBloque("("), cierreBloque(")"), quote("'"), iF("if"), comentario(";"), lambda("lambda");
 
 		private String nombre;
 

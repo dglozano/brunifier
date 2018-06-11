@@ -49,7 +49,14 @@ public class DelimitadorDeQuotes extends ComponenteDeProcesamiento {
 									lineaOriginal.setMarca("");
 								}
 								else{
-									lineaOriginal.setMarca("CIERRA LISTA");
+									String marca = lineaOriginal.getMarca();
+									if(marca != null && marca.contains(" EN ")){
+										marca = marca.substring(marca.indexOf(" EN "));
+									}
+									else{
+										marca = "";
+									}
+									lineaOriginal.setMarca("CIERRA LISTA" + marca);
 								}
 							}
 						}
