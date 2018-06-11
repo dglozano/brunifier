@@ -31,28 +31,28 @@ public class Main extends Application {
 	}
 
 	private void mostrarPantallaInicial() throws IOException {
-        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/main/resources/img/braille.png")));
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/main/resources/FXMLFileChooser.fxml"));
-        Parent fileChooserView = loader.load();
+		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/main/resources/img/braille.png")));
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(getClass().getResource("/main/resources/FXMLFileChooser.fxml"));
+		Parent fileChooserView = loader.load();
 
-        Scene initScene = new Scene(fileChooserView);
+		Scene initScene = new Scene(fileChooserView);
 
-        primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-        primaryStage.setTitle("Brunifier");
-        primaryStage.setScene(initScene);
-        primaryStage.setResizable(false);
-        primaryStage.addEventHandler(KeyEvent.KEY_RELEASED, (KeyEvent event) -> {
-            if (KeyCode.ESCAPE == event.getCode()) {
-                Platform.exit();
-            }
-        });
+		primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+		primaryStage.setTitle("Brunifier");
+		primaryStage.setScene(initScene);
+		primaryStage.setResizable(false);
+		primaryStage.addEventHandler(KeyEvent.KEY_RELEASED, (KeyEvent event) -> {
+			if(KeyCode.ESCAPE == event.getCode()){
+				Platform.exit();
+			}
+		});
 
 		primaryStage.setScene(initScene);
 
 		SoundPlayer.playBeep();
 
-        FXMLFileChooserController controller = (FXMLFileChooserController)loader.getController();
-        controller.setStageAndInitializeKeyCombinations(primaryStage);
+		FXMLFileChooserController controller = (FXMLFileChooserController) loader.getController();
+		controller.setStageAndInitializeKeyCombinations(primaryStage);
 	}
 }

@@ -49,12 +49,12 @@ public class DelimitadorDeClasesYMetodos extends ComponenteDeProcesamiento {
 					pilaDeBloquesAbiertos.add(aux);
 				}
 				else{
-					if(cierraBloque(lineaActual.substring(lineaActual.length() - 1, lineaActual.length()))){
+					if(cierraBloque(lineaActual.substring(lineaActual.length() - 1, lineaActual.length())) && pilaDeBloquesAbiertos.size() != 0){
 						String previoBloque = pilaDeBloquesAbiertos.remove(pilaDeBloquesAbiertos.size() - 1);
-						if(pilaDeBloquesAbiertos.size() == 0){
+						if(pilaDeBloquesAbiertos.size() == 0 && pilaDeClase.size() != 0){
 							lineaActual += " \"Fin de clase " + pilaDeClase.remove(pilaDeClase.size() - 1) + "\"";
 						}
-						else if(pilaDeClase.size() == 1 && pilaDeBloquesAbiertos.size() == 1){
+						else if(pilaDeClase.size() == 1 && pilaDeBloquesAbiertos.size() == 1 && pilaDeTipoMetodoClase.size() != 0){
 							boolean esMetodoDeClase = pilaDeTipoMetodoClase.remove(pilaDeTipoMetodoClase.size() - 1);
 							String nombreMetodo = previoBloque;
 							if(esMetodoDeClase){
