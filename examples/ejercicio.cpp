@@ -19,26 +19,26 @@ cout<<"ingrese el punto en el plano carteciano"<<endl;
 cin>>cordenadax;
 cin>>cordenaday;
 if (cordenadax>0 && cordenaday>0) {
-cout<<"el punto está en el primer cuadrante"<<endl;
+cout<<"el punto estï¿½ en el primer cuadrante"<<endl;
 }
 else {
 if (cordenadax<0 && cordenaday>0) {
-cout<<"el punto está en el segundo cuadrante"<<endl;
+cout<<"el punto estï¿½ en el segundo cuadrante"<<endl;
 }
 else {
 if (cordenadax<0 && cordenaday<0) {
-cout<<"el punto está en el tercer cuadrante"<<endl;
+cout<<"el punto estï¿½ en el tercer cuadrante"<<endl;
 }
 else {
 if (cordenadax>0 && cordenaday<0) {
-cout<<"El punto está en el cuarto cuadrante"<<endl;
+cout<<"El punto estï¿½ en el cuarto cuadrante"<<endl;
 }
 else {
 cout<<"es el origen"<<endl;
 switch(t) {
 case 0: {
 if(t==0) {
-//hacer algo
+//do something
 while(t<5) {
 t++;
 }

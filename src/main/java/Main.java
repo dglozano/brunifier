@@ -1,38 +1,19 @@
 package main.java;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.text.Font;
-import main.java.cp.exception.UnsupportedLanguageException;
-import main.java.cp.model.Lenguaje;
-import main.java.cp.model.Procesamiento;
-import main.java.cp.aedd.CMasMasProcedural;
-import main.java.cp.pdp.lisp.Scheme;
-import main.java.cp.pdp.st.GNUSmalltalk;
-import main.java.cp.pdp.st.PharoToGNUSmalltalk;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import main.java.ui.FXMLFileChooserController;
 import main.java.util.SoundPlayer;
+
+import java.io.IOException;
 
 public class Main extends Application {
 

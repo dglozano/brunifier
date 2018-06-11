@@ -293,6 +293,7 @@ public class FXMLFileChooserController implements Initializable {
         ayuda.setHeaderText(null);
         ayuda.setTitle("INFORMACION");
         ayuda.showAndWait();
+
         SoundPlayer.playBeep();
     }
 

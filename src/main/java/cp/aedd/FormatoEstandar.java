@@ -7,8 +7,25 @@ public class FormatoEstandar extends ComponenteDeProcesamiento {
 
 	@Override
 	public Archivo<?> ejecutar(Archivo<?> archivo) {
-		//TODO Hacer.
-		return archivo;
+		ArchivoCMasMas archivoTransformado = (ArchivoCMasMas) archivo;
+		archivoTransformado.getLineas().forEach(lineaOriginal -> {
+		    String codigoLinea = lineaOriginal.getCodigoLinea();
+			codigoLinea = codigoLinea.trim();
+			if(codigoLinea.contains("{")){
+                codigoLinea =  codigoLinea.replace("{"," {");
+            }
+            codigoLinea = codigoLinea.trim();
+		    if(codigoLinea.contains("//")){
+		        int posicionBarra = codigoLinea.lastIndexOf("/");
+		        String comentario = codigoLinea.substring(posicionBarra+1, codigoLinea.length());
+		        String codigoAntesComentario = codigoLinea.substring(0, posicionBarra-1);
+		        lineaOriginal.addMarca(comentario);
+		        lineaOriginal.setCodigoLinea(codigoAntesComentario);
+            } else {
+                lineaOriginal.setCodigoLinea(codigoLinea);
+            }
+		});
+		return archivoTransformado;
 	}
 
 	/*
