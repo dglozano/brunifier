@@ -67,8 +67,11 @@ public class LineaCMasMas extends Linea {
 		return this.getCodigoLinea().startsWith("switch");
 	}
 
+	/*TODO: se agrega el chequeo de longitud para que no haya conflictos con las funciones double
+	considero que si el componente de formato estandar esta bien hecho las estructuras "do" deberian
+	ser "do {" teniendo exactamente 4 espacios*/
 	public boolean esDo() {
-		return this.getCodigoLinea().startsWith("do");
+		return this.getCodigoLinea().startsWith("do") && this.getCodigoLinea().length() <=4;
 	}
 
 	public boolean tieneElse() {
