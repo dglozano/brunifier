@@ -11,7 +11,7 @@ public class LineaScheme extends Linea {
 	@Override
 	public String toString() {
 		return this.getCodigoLinea() + ((!this.marca.isEmpty()) ? " ; " + this.marca : "") +
-				((!this.comentario.isEmpty()) ? this.comentario : "");
+				((!this.comentario.isEmpty()) ? " " + this.comentario : "");
 	}
 
 	public LineaScheme() {
