@@ -1,7 +1,5 @@
 package main.java;
 
-import java.io.IOException;
-
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +12,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import main.java.ui.FXMLFileChooserController;
 import main.java.util.SoundPlayer;
+
+import java.io.IOException;
 
 public class Main extends Application {
 

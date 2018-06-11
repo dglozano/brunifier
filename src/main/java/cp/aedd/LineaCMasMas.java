@@ -9,7 +9,7 @@ public class LineaCMasMas extends Linea {
 
 	@Override
 	public String toString() {
-		return this.getCodigoLinea() + ((!this.marca.isEmpty()) ? " // " + this.marca : "");
+		return this.getCodigoLinea() + ((!this.marca.isEmpty()) ? "// " + this.marca : "");
 	}
 
 	public LineaCMasMas() {
@@ -36,16 +36,22 @@ public class LineaCMasMas extends Linea {
 
 	// Una Linea de C++ abre un bloque si tiene una llave abriendo al final
 	public boolean abreBloque() {
+        if(esLineaVacia())
+            return false;
 		return this.getCodigoLinea().charAt(getCodigoLinea().length() - 1) == '{';
 	}
 
 	// Una Linea de C++ cierra un bloque si tiene una llave cerrando al final
 	public boolean cierraBloque() {
+        if(esLineaVacia())
+            return false;
 		return this.getCodigoLinea().charAt(getCodigoLinea().length() - 1) == '}';
 	}
 
 	// Devuelve el string de la linea sin el ; final. Si es un case/default de un switch, le quita el :
 	public String getCodigoLineaSinFinal() {
+        if(esLineaVacia())
+            return "";
 		String aux = this.getCodigoLinea().substring(0, this.getCodigoLinea().length() - 2);
 		if(aux.endsWith(":")){
 			aux = aux.substring(0, aux.length() - 1);
@@ -105,6 +111,8 @@ public class LineaCMasMas extends Linea {
 
 	//Determina si una linea es la cabecera de una funcion.
 	public boolean esCabeceraDeFuncion() {
+	    if(esLineaVacia())
+	        return false;
 		boolean esCabecera = false;
 		String l = this.getCodigoLinea();
 		//Tiene que tener un parentesis que abre y otro que cierra despues del que abre
@@ -124,5 +132,9 @@ public class LineaCMasMas extends Linea {
 			return 0;
 		}
 		return trim.split("\\s+").length;
+	}
+
+	public boolean esLineaVacia(){
+		return this.getCodigoLinea().length() == 0;
 	}
 }
